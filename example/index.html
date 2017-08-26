@@ -30,12 +30,20 @@
                 </table>
             </div>
             <div class="column">
-                <h3>Actions</h3>
+                <h3>Audio Actions</h3>
                 <button id="load">load</button>
                 <button id="play">play</button>
                 <button id="pause">pause</button>
                 <button id="restart">restart</button>
-                <input type="number" id="volume" placeholder="Volume">
+                <button id="mute">mute</button>
+                <button id="unmute">unmute</button>
+
+                <fieldset>
+                    <label for="volume">Volume</label>
+                    <input type="number" id="volume" placeholder="Volume" min="0" max="1" value="1" step="0.1">
+                    <label for="rate">Rate</label>
+                    <input type="number" id="rate" placeholder="Volume" value="1" min="0" max="4" step="0.1">
+                </fieldset>
             </div>
         </div>
     </div>

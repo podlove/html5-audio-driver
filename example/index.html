@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Audio Driver Test Env</title>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+    <!-- CSS Reset -->
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+
+    <!-- Milligram CSS minified -->
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+
+    <style>
+        body {
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <h3>Properties</h3>
+                <table>
+                    <thead>
+                        <th>property</th>
+                        <th>value</th>
+                    </thead>
+                    <tbody id="props"></tbody>
+                </table>
+            </div>
+            <div class="column">
+                <h3>Actions</h3>
+                <button id="load">load</button>
+                <button id="play">play</button>
+                <button id="pause">pause</button>
+                <button id="restart">restart</button>
+                <input type="number" id="volume" placeholder="Volume">
+            </div>
+        </div>
+    </div>
+    <script src="example.js"></script>
+</body>
+</html>

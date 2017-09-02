@@ -204,7 +204,7 @@ describe('actions', () => {
       expect(typeof setVolumeAction).to.equal('function')
     })
 
-    onlyOnDesktop('sets the audio volume', done => {
+    onDesktopIt('sets the audio volume', done => {
       testLoader(audioElement, () => {
         expect(volume(audioElement)).to.equal(1)
         setVolumeAction(0.5)
@@ -213,7 +213,7 @@ describe('actions', () => {
       })
     })
 
-    onlyOnDesktop('should prevent volume less than 0', done => {
+    onDesktopIt('should prevent volume less than 0', done => {
       testLoader(audioElement, () => {
         expect(volume(audioElement)).to.equal(1)
         setVolumeAction(-1)
@@ -222,7 +222,7 @@ describe('actions', () => {
       })
     })
 
-    onlyOnDesktop('should prevent volume larger than 1', done => {
+    onDesktopIt('should prevent volume larger than 1', done => {
       testLoader(audioElement, () => {
         expect(volume(audioElement)).to.equal(1)
         setVolumeAction(2)

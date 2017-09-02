@@ -15,7 +15,7 @@ const eventFactory = (event, processor = props, factoryOptions = {}) =>
   })
 
 const onLoading = eventFactory('progress', props, { once: true })
-const onLoaded = eventFactory('canplay', props, { once: true })
+const onLoaded = eventFactory('canplay', props)
 
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')

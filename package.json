@@ -1,10 +1,9 @@
 {
   "name": "html5-audio-driver",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
-  "homepage": "https://github.com/cvgellhorn/webpack-boilerplate",
   "scripts": {
     "dev": "rm -rf tmp && mkdir -p tmp && cp -R example/audio-files tmp/ && NODE_ENV=development webpack-dev-server --progress --config webpack.config.dev.js",
     "build": "webpack -p --progress --config webpack.config.build.js",

@@ -7,8 +7,26 @@ const updatePlaytimeToCurrentTime = audio => {
 }
 
 const updateCurrentTimeToPlaytime = audio => {
-  audio.currentTime = audio.playtime
+  try {
+    audio.currentTime = audio.playtime
+  } catch (e) {}
+
   return audio
+}
+
+// probe if html implemnetation has quirks (for Safari and IE)
+const needsVirtualPlaytime = audioNode => {
+  try {
+    audioNode.currentTime = 10
+
+    if (audioNode.currentTime === 0) {
+      return true
+    }
+  } catch (e) {
+    return true
+  }
+
+  return false
 }
 
 // HTML Audio implementation 101 quirks: on Safari and iOS you just can set currentTime after loading
@@ -18,17 +36,14 @@ const fixPlaytime = audioNode => {
   audioNode.addEventListener('timeupdate',
     compose(updatePlaytimeToCurrentTime, getAudioFromEvent))
 
-  // probe if html implemnetation has quirks
-  audioNode.currentTime = 10
-
-  if (audioNode.currentTime === 0) {
+  if (needsVirtualPlaytime(audioNode)) {
     audioNode.addEventListener('canplay',
       compose(updateCurrentTimeToPlaytime, getAudioFromEvent), { once: true })
     audioNode.addEventListener('play',
       compose(updateCurrentTimeToPlaytime, getAudioFromEvent))
+  } else {
+    audioNode.currentTime = 0
   }
-
-  audioNode.currentTime = 0
 
   return audioNode
 }

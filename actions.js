@@ -5,6 +5,12 @@ import { collectProperties } from './utils'
  * ACTIONS
  */
 
+// load :: AudioElement -> () -> AudioElement
+const load = audio => () => {
+  audio.load()
+  return audio
+}
+
 // play :: AudioElement -> () -> AudioElement
 const play = audio => () => {
   // Some browsers doesn't implement it as a promise
@@ -12,7 +18,7 @@ const play = audio => () => {
     audio
       .play()
       // safe play, fixes hides inconsistency in audio API
-      .catch(() => {})
+      .catch()
   } catch (e) {}
 
   return audio
@@ -21,12 +27,6 @@ const play = audio => () => {
 // pause :: AudioElement -> () -> AudioElement
 const pause = audio => () => {
   audio.pause()
-  return audio
-}
-
-// load :: AudioElement -> () -> AudioElement
-const load = audio => () => {
-  audio.load()
   return audio
 }
 
@@ -69,8 +69,11 @@ const setPlaytime = audio => (time = 0) => {
   time = time > audioDuration ? audioDuration : time
   time = time < 0 ? 0 : time
 
-  audio.playtime = time
-  audio.currentTime = time
+  // Safe play for IE11+
+  try {
+    audio.playtime = time
+    audio.currentTime = time
+  } catch (e) {}
 
   return audio
 }

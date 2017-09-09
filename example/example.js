@@ -43,7 +43,7 @@ const myAudio = audio([{
   mimeType: 'audio/mp3'
 }, {
   url: 'audio-files/example.ogg',
-  mimeType: 'audio/ogg'
+  mimeType: 'audio/pgg'
 }])
 
 const audioEvents = events(myAudio)

@@ -1,11 +1,13 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "0.6.3",
+  "version": "0.6.5",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
   "scripts": {
     "dev": "rm -rf tmp && mkdir -p tmp && cp -R example/audio-files tmp/ && NODE_ENV=development webpack-dev-server --progress --config webpack.config.dev.js",
+    "clean": "rm -rf dist/ && mkdir -p dist/",
+    "bundle": "npm run clean && cp LICENSE package.json dist/ && npm run build && cd dist/ && npm pack",
     "build": "webpack -p --progress --config webpack.config.build.js",
     "example": "rm -rf tmp && mkdir -p tmp && cp -R example/audio-files tmp/ && webpack -p --progress --config webpack.config.dev.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./test/webpack.config.js && http-server tmp",
@@ -18,11 +20,13 @@
   "dependencies": {
     "ramda": "0.24.1"
   },
+  "main": "index.js",
   "devDependencies": {
     "@webpack-blocks/babel6": "0.4.1",
     "@webpack-blocks/dev-server2": "0.4.0",
     "@webpack-blocks/webpack2": "0.4.0",
     "babel-core": "6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "6.24.1",
     "babel-register": "6.26.0",

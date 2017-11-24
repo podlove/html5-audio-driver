@@ -2,6 +2,7 @@
 [![npm version](https://badge.fury.io/js/html5-audio-driver.svg)](https://badge.fury.io/js/html5-audio-driver)
 [![Standard Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/feross/standard)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver?ref=badge_shield)
 
 Opinionated low level functional bindings to control html5 audio
 
@@ -218,3 +219,7 @@ In Safari and mobile Safari it isn't possible to set the `currentTime` before lo
 ### Mobile Environments
 
 To `play` audio on mobile devices you have to trigger use a direct user interaction to trigger the audio. Also `volume` is not available on mobile devices.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver?ref=badge_large)

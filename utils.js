@@ -7,6 +7,6 @@ const collectProperties = (props = {}) => val =>
     {}
   )
 
-const getAudioFromEvent = path(['target'])
+const getNodeFromEvent = path(['target'])
 
-export { collectProperties, getAudioFromEvent }
+export { collectProperties, getNodeFromEvent }

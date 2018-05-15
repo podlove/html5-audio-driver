@@ -8,6 +8,7 @@ module.exports = createConfig([
     index: './index.js',
     actions: './actions.js',
     audio: './audio.js',
+    video: './video.js',
     events: './events.js',
     props: './props.js'
   }),

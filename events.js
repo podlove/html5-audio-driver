@@ -1,5 +1,5 @@
 import { curry, compose } from 'ramda'
-import { getAudioFromEvent, collectProperties } from './utils'
+import { getNodeFromEvent, collectProperties } from './utils'
 import { props, playtime, volume, duration, rate, buffered } from './props'
 
 // events
@@ -7,7 +7,7 @@ const eventFactory = (event, processor = props, factoryOptions = {}) =>
   curry((audio, callback, runtimeOptions = {}) => {
     audio.addEventListener(
       event,
-      compose(callback, processor, getAudioFromEvent),
+      compose(callback, processor, getNodeFromEvent),
       Object.assign({}, factoryOptions, runtimeOptions)
     )
 

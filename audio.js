@@ -1,5 +1,5 @@
 import { compose } from 'ramda'
-import { getAudioFromEvent } from './utils'
+import { getNodeFromEvent } from './utils'
 
 const updatePlaytimeToCurrentTime = audio => {
   audio.playtime = audio.currentTime
@@ -34,13 +34,13 @@ const fixPlaytime = audioNode => {
   audioNode.playtime = 0
 
   audioNode.addEventListener('timeupdate',
-    compose(updatePlaytimeToCurrentTime, getAudioFromEvent))
+    compose(updatePlaytimeToCurrentTime, getNodeFromEvent))
 
   if (needsVirtualPlaytime(audioNode)) {
     audioNode.addEventListener('canplay',
-      compose(updateCurrentTimeToPlaytime, getAudioFromEvent), { once: true })
+      compose(updateCurrentTimeToPlaytime, getNodeFromEvent), { once: true })
     audioNode.addEventListener('play',
-      compose(updateCurrentTimeToPlaytime, getAudioFromEvent))
+      compose(updateCurrentTimeToPlaytime, getNodeFromEvent))
   } else {
     audioNode.currentTime = 0
   }

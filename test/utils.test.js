@@ -3,7 +3,7 @@ import 'babel-polyfill'
 import { audio } from 'html5-audio-driver'
 import { audioFixture } from 'test/fixtures'
 import { testLoader } from 'test/helpers'
-import { collectProperties, getAudioFromEvent } from 'html5-audio-driver/utils'
+import { collectProperties, getNodeFromEvent } from 'html5-audio-driver/utils'
 
 describe('utils', () => {
   describe('collectProperties', () => {
@@ -25,7 +25,7 @@ describe('utils', () => {
     })
   })
 
-  describe('getAudioFromEvent', () => {
+  describe('getNodeFromEvent', () => {
     let audioElement
 
     beforeEach(() => {
@@ -37,12 +37,12 @@ describe('utils', () => {
     })
 
     it('should be a function', () => {
-      expect(typeof getAudioFromEvent).to.equal('function')
+      expect(typeof getNodeFromEvent).to.equal('function')
     })
 
     it('should extract the audio element from event', (done) => {
       testLoader(audioElement, (target, event) => {
-        expect(getAudioFromEvent(event)).to.equal(audioElement)
+        expect(getNodeFromEvent(event)).to.equal(audioElement)
         done()
       })
     })

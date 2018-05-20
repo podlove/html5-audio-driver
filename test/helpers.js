@@ -1,6 +1,5 @@
 /* globals it */
 import Smartphone from 'detect-mobile-browser'
-console.log(Smartphone)
 const mobile = Smartphone(false)
 
 export const testLoader = (audio, cb) => {

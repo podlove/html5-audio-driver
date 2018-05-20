@@ -15,7 +15,8 @@ const eventFactory = (event, processor = props, factoryOptions = {}) =>
   })
 
 const onLoading = eventFactory('progress', props, { once: true })
-const onLoaded = eventFactory('canplay', props)
+const onReady = eventFactory('canplay', props)
+const onLoaded = eventFactory('canplaythrough', props)
 
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')
@@ -82,5 +83,6 @@ export {
   onRateChange,
   onPlay,
   events,
-  onBuffering
+  onBuffering,
+  onReady
 }

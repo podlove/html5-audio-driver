@@ -1,15 +1,14 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
   "scripts": {
-    "dev": "rm -rf tmp && mkdir -p tmp && cp -R example/audio-files tmp/ && NODE_ENV=development webpack-dev-server --progress --config webpack.config.dev.js",
+    "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
     "clean": "rm -rf dist/ && mkdir -p dist/",
-    "bundle": "npm run clean && cp LICENSE package.json dist/ && npm run build && cd dist/ && npm pack",
-    "build": "webpack -p --progress --config webpack.config.build.js",
-    "example": "rm -rf tmp && mkdir -p tmp && cp -R example/audio-files tmp/ && webpack -p --progress --config webpack.config.dev.js",
+    "prepublish": "npm run clean && cp LICENSE package.json dist/ && npm run build",
+    "build": "webpack -p --progress --config build/webpack.config.build.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./test/webpack.config.js && http-server tmp",
     "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./test/webpack.config.js"
   },
@@ -22,9 +21,6 @@
   },
   "main": "index.js",
   "devDependencies": {
-    "@webpack-blocks/babel6": "0.4.1",
-    "@webpack-blocks/dev-server2": "0.4.0",
-    "@webpack-blocks/webpack2": "0.4.0",
     "babel-core": "6.26.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-polyfill": "^6.26.0",
@@ -32,16 +28,17 @@
     "babel-register": "6.26.0",
     "chai": "4.1.1",
     "detect-mobile-browser": "5.0.0",
-    "file-loader": "^0.11.2",
+    "file-loader": "^1.1.11",
     "fs-extra": "4.0.1",
     "glob": "7.1.2",
     "handlebars": "4.0.10",
+    "html-webpack-plugin": "^3.2.0",
     "http-server": "0.10.0",
     "mocha": "3.5.0",
     "sinon": "3.2.1",
     "sinon-chai": "2.13.0",
-    "webdriverio": "4.8.0",
-    "webpack": "3.5.5",
-    "webpack-dev-server": "2.7.1"
+    "webpack": "^4.9.1",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
   }
 }

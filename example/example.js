@@ -1,4 +1,7 @@
 import 'file-loader?name=index.html!./index.html'
+import m4a from 'file-loader!./audio-files/example.m4a'
+import mp3 from 'file-loader!./audio-files/example.mp3'
+import ogg from 'file-loader!./audio-files/example.ogg'
 
 import {
   curry,
@@ -36,13 +39,13 @@ const debug = curry((category, payload) => {
 })
 
 const myAudio = audio([{
-  url: 'audio-files/example.m4a',
+  url: m4a,
   mimeType: 'audio/mp4'
 }, {
-  url: 'audio-files/example.mp3',
+  url: mp3,
   mimeType: 'audio/mp3'
 }, {
-  url: 'audio-files/example.ogg',
+  url: ogg,
   mimeType: 'audio/pgg'
 }])
 

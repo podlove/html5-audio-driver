@@ -222,6 +222,10 @@ In Safari and mobile Safari it isn't possible to set the `currentTime` before lo
 
 To `play` audio on mobile devices you have to trigger use a direct user interaction to trigger the audio. Also `volume` is not available on mobile devices.
 
+## Publishing
+
+Run `yarn publish:prepare` move to the `dist/` folder and run `npm publish --public`
+
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver?ref=badge_large)

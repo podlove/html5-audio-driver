@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
     "clean": "rm -rf dist/ && mkdir -p dist/",
-    "prepublish": "npm run clean && cp LICENSE package.json dist/ && npm run build",
+    "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build",
     "build": "webpack -p --progress --config build/webpack.config.build.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./test/webpack.config.js && http-server tmp",
     "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./test/webpack.config.js"

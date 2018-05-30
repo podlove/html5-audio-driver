@@ -67,7 +67,8 @@ const events = collectProperties({
   onDurationChange,
   onRateChange,
   onPlay,
-  onBuffering
+  onBuffering,
+  onReady
 })
 
 export {

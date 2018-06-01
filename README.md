@@ -143,7 +143,7 @@ audioEvents.onEnd(console.log)
 |---------------------|-------------------------------------------------------|-------------------|-------------------------------------------------------------------------|---------|
 | `onLoading`         | When browser starts audio loading                     | `progress`        | All props                                                               | `true`  |
 | `onLoaded`          | When browser loaded the entire file                   | `canplaythrough`  | All props                                                               | `true`  |
-| `onReady`           | When browser has enough data to play                  | `canplay`         | All props                                                               | `true`  |
+| `onReady`           | When browser has enough data to play                  | `canplay`         | All props                                                               | `false` |
 | `onPlay`            | When browser starts playing audio                     | `play`            | All props                                                               | `false` |
 | `onPause`           | When browser pauses audio                             | `pause`           | All props                                                               | `false` |
 | `onEnd`             | When browser reaches end of audio                     | `ended`           | All props                                                               | `false` |

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>Podlove Html5 Audio Driver Test Env</title>
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
@@ -11,28 +11,43 @@
     <!-- Milligram CSS minified -->
     <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 
-
-
     <style>
-        body {
-            padding: 1em;
-        }
+      body {
+        padding: 1em;
+      }
+
+      .media video {
+        width: 100%;
+        height: auto;
+      }
+
+      td {
+        max-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="column">
+          <div class="column">
+            <h1 id="title"></h1>
+          </div>
+        </div>
+        <div class="row">
+            <div class="column column-50">
                 <h3>Properties</h3>
                 <table>
                     <thead>
-                        <th>property</th>
-                        <th>value</th>
+                        <th width="25%">property</th>
+                        <th width="75%%">value</th>
                     </thead>
                     <tbody id="props"></tbody>
                 </table>
             </div>
-            <div class="column">
+            <div class="column column-50">
                 <h3>Audio Actions</h3>
                 <button id="load">load</button>
                 <button id="play">play</button>
@@ -42,13 +57,48 @@
                 <button id="unmute">unmute</button>
 
                 <fieldset>
-                    <label for="volume">Volume</label>
-                    <input type="number" id="volume" placeholder="Volume" min="0" max="1" value="1" step="0.1">
-                    <label for="rate">Rate</label>
-                    <input type="number" id="rate" placeholder="Volume" value="1" min="0" max="4" step="0.1">
+                  <label for="volume">Volume</label>
+                  <input type="number" id="volume" placeholder="Volume" min="0" max="1" value="1" step="0.1">
+                  <label for="rate">Rate</label>
+                  <input type="number" id="rate" placeholder="Volume" value="1" min="0" max="4" step="0.1">
                 </fieldset>
+
+                <div id="media-node" class="media"></div>
             </div>
         </div>
     </div>
+    <script>
+        const title = document.getElementById('title')
+        const params = (new URL(location)).searchParams
+        const test = params.get('mode')
+
+        const modes = {
+          audio: {
+            title: 'Audio Driver',
+            src: 'audio.js'
+          },
+          'audio-hls': {
+            title: 'Audio Driver HLS',
+            src: 'audio-hls.js'
+          },
+          video: {
+            title: 'Video Driver',
+            src: 'video.js'
+          },
+          'video-hls': {
+            title: 'Video Driver HLS',
+            src: 'video-hls.js'
+          }
+        }
+
+        if (test) {
+          const script = document.createElement('script')
+          script.setAttribute('src', `tmp/${modes[test].src}`)
+          script.setAttribute('type', 'text/javascript')
+
+          title.innerText = modes[test].title
+          document.body.appendChild(script)
+        }
+      </script>
 </body>
 </html>

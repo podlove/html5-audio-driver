@@ -1,24 +1,24 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: { example: './example/example.js' },
+  devtool: 'source-map',
+  entry: {
+    audio: './example/audio.js',
+    'audio-hls': './example/audio-hls.js',
+    video: './example/video.js',
+    'video-hls': './example/video-hls.js'
+  },
   output: {
     filename: './tmp/[name].js'
   },
   resolve: {
     alias: {
-      'html5-audio-driver': '../src'
+      '@podlove/html5-audio-driver': path.resolve(__dirname, '..', 'src')
     }
   },
   devServer: {
     host: '0.0.0.0',
     disableHostCheck: true
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Audio Driver Test Env',
-      template: './example/index.html'
-    })
-  ]
+  }
 }

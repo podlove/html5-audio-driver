@@ -1,9 +1,9 @@
 /* global describe it expect sinon beforeEach afterEach */
 import 'babel-polyfill'
-import { audio } from 'html5-audio-driver'
+import { audio } from '@podlove/html5-audio-driver'
 import { audioFixture } from 'test/fixtures'
 import { testLoader } from 'test/helpers'
-import { collectProperties, getNodeFromEvent } from 'html5-audio-driver/utils'
+import { collectProperties, getNodeFromEvent } from '@podlove/html5-audio-driver/utils'
 
 describe('utils', () => {
   describe('collectProperties', () => {

@@ -1,9 +1,9 @@
 /* global describe it expect beforeEach afterEach */
 import { compose } from 'ramda'
-import { audio } from 'html5-audio-driver'
-import { onPlay } from 'html5-audio-driver/events'
-import { actions, setPlaytime, play, pause, load, mute, unmute, setVolume, setRate } from 'html5-audio-driver/actions'
-import { duration, playing, muted, volume, rate } from 'html5-audio-driver/props'
+import { audio } from '@podlove/html5-audio-driver'
+import { onPlay } from '@podlove/html5-audio-driver/events'
+import { actions, setPlaytime, play, pause, load, mute, unmute, setVolume, setRate } from '@podlove/html5-audio-driver/actions'
+import { duration, playing, muted, volume, rate } from '@podlove/html5-audio-driver/props'
 import { audioFixture } from 'test/fixtures'
 import { testLoader, onDesktopIt } from 'test/helpers'
 
@@ -50,8 +50,8 @@ describe('actions', () => {
     })
 
     it('should use the playtime on play', done => {
-      playtimeSetter(50)
       testLoader(audioElement, compose(done, () => {
+        playtimeSetter(50)
         playAction()
         expect(audioElement.playtime).to.be.at.least(50)
         expect(audioElement.currentTime).to.be.at.least(50)
@@ -194,6 +194,7 @@ describe('actions', () => {
 
     beforeEach(() => {
       setVolumeAction = setVolume(audioElement)
+      setVolumeAction(1)
     })
 
     it('should be a function', () => {

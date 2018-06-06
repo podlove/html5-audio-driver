@@ -1,21 +1,44 @@
-import { curry, compose } from 'ramda'
-import { getNodeFromEvent, collectProperties } from './utils'
-import { props, playtime, volume, duration, rate, buffered } from './props'
+/* global HTMLMediaElement */
+import {
+  curry,
+  compose
+} from 'ramda'
+import {
+  getNodeFromEvent,
+  collectProperties
+} from './utils'
+import {
+  props,
+  playtime,
+  volume,
+  duration,
+  rate,
+  buffered
+} from './props'
+import {
+  hlsErrorHandler
+} from './hls'
 
 // events
 const eventFactory = (event, processor = props, factoryOptions = {}) =>
-  curry((audio, callback, runtimeOptions = {}) => {
-    audio.addEventListener(
+  curry((media, callback, runtimeOptions = {}) => {
+    media.addEventListener(
       event,
       compose(callback, processor, getNodeFromEvent),
       Object.assign({}, factoryOptions, runtimeOptions)
     )
 
-    return audio
+    return media
   })
 
-const onLoading = eventFactory('progress', props, { once: true })
-const onLoaded = eventFactory('canplaythrough', props, { once: true })
+const onLoading = eventFactory('progress', props, {
+  once: true
+})
+
+const onLoaded = eventFactory('canplaythrough', props, {
+  once: true
+})
+
 const onReady = eventFactory('canplay', props)
 
 const onPlay = eventFactory('play')
@@ -27,29 +50,32 @@ const onBuffering = eventFactory('waiting')
 const onPlaytimeUpdate = eventFactory('timeupdate', playtime)
 const onVolumeChange = eventFactory('volumechange', volume)
 
-const onError = curry((audio, callback) => {
-  audio.addEventListener(
-    'error',
-    function (e) {
-      switch (this.networkState) {
-        case HTMLMediaElement.NETWORK_NO_SOURCE: {
-          return callback('NETWORK_NO_SOURCE')
-        }
-        case HTMLMediaElement.NETWORK_EMPTY: {
-          return callback('NETWORK_EMPTY')
-        }
-        case HTMLMediaElement.NETWORK_IDLE: {
-          return callback('NETWORK_IDLE')
-        }
-        case HTMLMediaElement.NETWORK_LOADING: {
-          return callback('NETWORK_LOADING')
-        }
-      }
-    },
-    true
-  )
+const onError = curry((media, callback) => {
+  if (media.hls) {
+    hlsErrorHandler(media.hls, callback)
+  } else {
+    media.addEventListener(
+      'error',
+      function (e) {
+        switch (this.networkState) {
+          case HTMLMediaElement.NETWORK_NO_SOURCE:
+            return callback('NETWORK_NO_SOURCE')
 
-  return audio
+          case HTMLMediaElement.NETWORK_EMPTY:
+            return callback('NETWORK_EMPTY')
+
+          case HTMLMediaElement.NETWORK_IDLE:
+            return callback('NETWORK_IDLE')
+
+          case HTMLMediaElement.NETWORK_LOADING:
+            return callback('NETWORK_LOADING')
+        }
+      },
+      true
+    )
+  }
+
+  return media
 })
 
 const onDurationChange = eventFactory('durationchange', duration)

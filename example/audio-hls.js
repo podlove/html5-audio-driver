@@ -28,7 +28,7 @@ const sources = [{
   title: 'MP3 Audio (mp3)',
   mimeType: 'audio/mpeg'
 }, {
-  url: 'https:/media.metaebene.me/hls/freakshow/fs218-der-kann-kein-blut-hoeren1.m3u8',
+  url: 'https:/media.metaebene.me/hls/freakshow/fs218-der-kann-kein-blut-hoeren.m3u8',
   size: 195,
   title: 'HLS Stream',
   mimeType: 'application/x-mpegURL'

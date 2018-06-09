@@ -22,7 +22,7 @@ export const attatchStream = media => {
     return media
   }
 
-  const hls = new Hls()
+  const hls = new Hls({ autoStartLoad: false })
   const sources = getMediaSources(media)
 
   const hlsStream = hlsSource(sources)
@@ -38,6 +38,11 @@ export const attatchStream = media => {
   mediaEvents.onPlay(() => {
     hls.loadSource(hlsStream)
   }, { once: true })
+
+  // Finally start loading
+  hls.on(Hls.Events.MANIFEST_PARSED, () => {
+    hls.startLoad(media.currentTime)
+  })
 
   // Translate errors to native media errors
   hls.on(Hls.Events.ERROR, function (event, data) {

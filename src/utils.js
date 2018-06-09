@@ -33,6 +33,12 @@ const setAttributes = node => attributes =>
     return result
   }, node)
 
+const getMediaSources = media =>
+  [...media.children].map(node => ({
+    url: node.getAttribute('src'),
+    mimeType: node.getAttribute('type')
+  }))
+
 export {
   toArray,
   collectProperties,
@@ -40,5 +46,6 @@ export {
   createNode,
   mountNode,
   setAttributes,
-  appendNode
+  appendNode,
+  getMediaSources
 }

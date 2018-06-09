@@ -15,9 +15,6 @@ import {
   rate,
   buffered
 } from './props'
-import {
-  hlsErrorHandler
-} from './hls'
 
 // events
 const eventFactory = (event, processor = props, factoryOptions = {}) =>
@@ -51,29 +48,27 @@ const onPlaytimeUpdate = eventFactory('timeupdate', playtime)
 const onVolumeChange = eventFactory('volumechange', volume)
 
 const onError = curry((media, callback) => {
-  if (media.hls) {
-    hlsErrorHandler(media.hls, callback)
-  } else {
-    media.addEventListener(
-      'error',
-      function (e) {
-        switch (this.networkState) {
-          case HTMLMediaElement.NETWORK_NO_SOURCE:
-            return callback('NETWORK_NO_SOURCE')
+  media.addEventListener(
+    'error',
+    function ({ detail }) {
+      const networkState = detail && detail.networkState
 
-          case HTMLMediaElement.NETWORK_EMPTY:
-            return callback('NETWORK_EMPTY')
+      switch (networkState || this.networkState) {
+        case HTMLMediaElement.NETWORK_NO_SOURCE:
+          return callback('NETWORK_NO_SOURCE')
 
-          case HTMLMediaElement.NETWORK_IDLE:
-            return callback('NETWORK_IDLE')
+        case HTMLMediaElement.NETWORK_EMPTY:
+          return callback('NETWORK_EMPTY')
 
-          case HTMLMediaElement.NETWORK_LOADING:
-            return callback('NETWORK_LOADING')
-        }
-      },
-      true
-    )
-  }
+        case HTMLMediaElement.NETWORK_IDLE:
+          return callback('NETWORK_IDLE')
+
+        case HTMLMediaElement.NETWORK_LOADING:
+          return callback('NETWORK_LOADING')
+      }
+    },
+    true
+  )
 
   return media
 })

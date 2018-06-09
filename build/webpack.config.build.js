@@ -1,5 +1,4 @@
 const path = require('path')
-
 const file = name => `./src/${name}.js`
 
 module.exports = {
@@ -11,12 +10,13 @@ module.exports = {
     video: file('video'),
     events: file('events'),
     props: file('props'),
-    utils: file('utils')
+    utils: file('utils'),
+    hls: file('hls')
   },
   output: {
     path: path.resolve('./dist'),
-    library: 'html-5-audio-driver',
+    filename: '[name].js',
     libraryTarget: 'umd',
-    filename: '[name].js'
+    library: '@podlove/html5-audio-driver'
   }
 }

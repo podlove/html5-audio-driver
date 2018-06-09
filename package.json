@@ -1,13 +1,13 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
     "clean": "rm -rf dist/ && mkdir -p dist/",
-    "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build",
+    "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build && cp -R src dist",
     "build": "webpack -p --progress --config build/webpack.config.build.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./test/webpack.config.js && http-server tmp",
     "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./test/webpack.config.js"
@@ -17,15 +17,15 @@
     "url": "https://github.com/podlove/html5-audio-driver.git"
   },
   "dependencies": {
-    "hls.js": "^0.9.1",
-    "ramda": "0.24.1"
+    "ramda": "0.24.1",
+    "hls.js": "0.9.1"
   },
   "main": "index.js",
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "6.26.0",
     "chai": "4.1.1",
     "css-loader": "^0.28.11",
@@ -39,7 +39,8 @@
     "sinon": "3.2.1",
     "sinon-chai": "2.13.0",
     "style-loader": "^0.21.0",
-    "webpack": "^4.9.1",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.12.0",
     "webpack-cli": "^2.1.4",
     "webpack-dev-server": "^3.1.4"
   }

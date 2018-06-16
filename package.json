@@ -1,6 +1,6 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
@@ -17,13 +17,15 @@
     "url": "https://github.com/podlove/html5-audio-driver.git"
   },
   "dependencies": {
-    "ramda": "0.24.1",
-    "hls.js": "0.9.1"
+    "hls.js": "0.9.1",
+    "ramda": "0.24.1"
   },
   "main": "index.js",
   "devDependencies": {
     "babel-core": "6.26.0",
+    "babel-loader": "^7.1.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "6.26.0",

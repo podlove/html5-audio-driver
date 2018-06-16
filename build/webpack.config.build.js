@@ -18,5 +18,17 @@ module.exports = {
     filename: '[name].js',
     libraryTarget: 'umd',
     library: '@podlove/html5-audio-driver'
+  },
+  module: {
+    rules: [{
+      test: /\.(js)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['env']
+        }
+      }
+    }]
   }
 }

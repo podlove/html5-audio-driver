@@ -1,8 +1,6 @@
 import { compose } from 'ramda'
 
 import { createSourceNodes, mediaNode } from './media'
-import { toArray } from './utils'
+import { mountNode, toArray } from './utils'
 
-const videoNode = mediaNode('video')
-
-export const video = compose(createSourceNodes(videoNode), toArray)
+export const video = sources => compose(mountNode, createSourceNodes(mediaNode('video')), toArray)(sources)

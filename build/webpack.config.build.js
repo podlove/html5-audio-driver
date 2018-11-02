@@ -11,7 +11,8 @@ module.exports = {
     events: file('events'),
     props: file('props'),
     utils: file('utils'),
-    hls: file('hls')
+    hls: file('hls'),
+    filters: file('filters')
   },
   output: {
     path: path.resolve('./dist'),

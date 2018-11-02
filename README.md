@@ -110,6 +110,7 @@ playEvent(console.log) // similar to onPlay(myAudioElement, console.log)
 *  muted,
 *  src,
 *  paused,
+*  channels,
 *  playing
 * }
 */
@@ -203,6 +204,7 @@ props(myAudioElement)
 | `muted`     | Indicates if audio is muted                       | boolean                                                                                       | `undefined`     |
 | `src`       | Used audio source                                 | string                                                                                        | `undefined`     |
 | `paused`    | Indicates if audio is paused                      | boolean                                                                                       | `undefined`     |
+| `channels`  | Available audio channels                          | number                                                                                        | `undefined`     |
 | `playing`   | Indicates if audio is playing                     | boolean                                                                                       | `false`         |
 
 

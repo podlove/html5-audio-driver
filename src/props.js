@@ -25,6 +25,9 @@ const paused = path(['paused'])
 const rate = path(['playbackRate'])
 const muted = path(['muted'])
 const src = path(['currentSrc'])
+const channels = path(['activeBuffer', 'channelCount'])
+const buffer = path(['audioBuffer'])
+
 const state = compose(state => {
   switch (state) {
     case 0: {
@@ -46,11 +49,11 @@ const state = compose(state => {
 }, path(['readyState']))
 
 // TODO: make functional
-const playing = podcast =>
-  podcast.currentTime > 0 &&
-  !podcast.paused &&
-  !podcast.ended &&
-  podcast.readyState > 2
+const playing = media =>
+  media.currentTime > 0 &&
+  !media.paused &&
+  !media.ended &&
+  media.readyState > 2
 
 const props = collectProperties({
   duration,
@@ -61,9 +64,11 @@ const props = collectProperties({
   ended,
   rate,
   muted,
+  channels,
   src,
   paused,
-  playing
+  playing,
+  buffer
 })
 
 export {
@@ -74,6 +79,7 @@ export {
   ended,
   rate,
   muted,
+  channels,
   state,
   playing,
   paused,

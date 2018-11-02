@@ -184,6 +184,7 @@ props(myAudioElement)
 *  rate,
 *  muted,
 *  src,
+*  channels,
 *  paused,
 *  playing
 * }

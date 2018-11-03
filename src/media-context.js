@@ -8,6 +8,8 @@ export const connectBuffer = curry((buffer, node) => {
 
   node.audioBuffer.connect(buffer)
   buffer.connect(node.audioContext.destination)
+
+  return node
 })
 
 export const audioContext = node => {

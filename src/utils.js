@@ -1,7 +1,8 @@
 import {
   path,
   compose,
-  reduce
+  reduce,
+  curry
 } from 'ramda'
 
 // Transformation utils
@@ -39,6 +40,12 @@ const getMediaSources = media =>
     mimeType: node.getAttribute('type')
   }))
 
+const dispatchEvent = curry((type, node) => {
+  const event = new Event(type)
+
+  node.dispatchEvent(event)
+})
+
 export {
   toArray,
   collectProperties,
@@ -47,5 +54,6 @@ export {
   mountNode,
   setAttributes,
   appendNode,
-  getMediaSources
+  getMediaSources,
+  dispatchEvent
 }

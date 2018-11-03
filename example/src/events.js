@@ -22,4 +22,5 @@ export const registerEvents = node => {
   mediaEvents.onRateChange(onEvent('rate changed'))
   mediaEvents.onDurationChange(onEvent('duration changed'))
   mediaEvents.onVolumeChange(onEvent('volume changed'))
+  mediaEvents.onFilterUpdate(onEvent('filter updated'))
 }

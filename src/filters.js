@@ -1,7 +1,8 @@
 import { compose } from 'ramda'
 
 import { channels } from './props'
-import { connectBuffer, registerBuffer } from './media-context'
+import { dispatchEvent } from './utils'
+import { connectBuffer } from './media-context'
 
 const hasAudioContext = node => {
   if (!node.audioContext || !node.audioBuffer) {
@@ -23,7 +24,10 @@ const mono = compose(node => {
   gainNode.channelCountMode = 'explicit';
   gainNode.channelInterpretation = 'speakers';
 
-  return connectBuffer(gainNode, node)
+  connectBuffer(gainNode, node)
+  dispatchEvent('filterUpdated', node)
+
+  return node
 })
 
 const stereo = compose(node => {
@@ -37,7 +41,10 @@ const stereo = compose(node => {
   gainNode.channelCountMode = 'explicit';
   gainNode.channelInterpretation = 'speakers';
 
-  return connectBuffer(gainNode, node)
+  connectBuffer(gainNode, node)
+  dispatchEvent('filterUpdated', node)
+
+  return node
 })
 
 export {

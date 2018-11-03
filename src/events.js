@@ -41,6 +41,7 @@ const onReady = eventFactory('canplay', props)
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')
 const onEnd = eventFactory('ended')
+const onFilterUpdate = eventFactory('filterUpdated', props)
 
 const onBufferChange = eventFactory('progress', buffered)
 const onBuffering = eventFactory('waiting')
@@ -89,7 +90,8 @@ const events = collectProperties({
   onRateChange,
   onPlay,
   onBuffering,
-  onReady
+  onReady,
+  onFilterUpdate
 })
 
 export {
@@ -106,5 +108,6 @@ export {
   onPlay,
   events,
   onBuffering,
-  onReady
+  onReady,
+  onFilterUpdate
 }

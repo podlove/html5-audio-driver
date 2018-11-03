@@ -155,6 +155,7 @@ audioEvents.onEnd(console.log)
 | `onError`           | When an error occurred while playing the audio        | `error`           | `NETWORK_NO_SOURCE`, `NETWORK_EMPTY`, `NETWORK_IDLE`, `NETWORK_LOADING` | `false` |
 | `onDurationChange`  | When browser has new information on audio duration    | `durationchange`  | duration                                                                | `false` |
 | `onRateChange`      | When browser detects a change in audio playback rate  | `ratechange`      | rate                                                                    | `false` |
+| `onFilterUpdate`    | When a filter has been changed                        | `filterUpdated`   | All props                                                               | `false` |
 
 ### Audio Element Properties
 

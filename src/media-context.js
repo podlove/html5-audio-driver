@@ -16,13 +16,14 @@ export const audioContext = node => {
   let webAudioContext
 
   try {
-    webAudioContext = new (window.AudioContext || window.webkitAudioContext)()
+    webAudioContext = new window.AudioContext()
   } catch (e) {
     console.warn(`[html-5-audio-driver]: can't create the audio context, seems like the browser is not compatible`)
     return node
   }
 
   const audioBuffer = webAudioContext.createMediaElementSource(node)
+
   audioBuffer.connect(webAudioContext.destination)
 
   node.audioContext = webAudioContext

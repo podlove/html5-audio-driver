@@ -44,6 +44,8 @@ const dispatchEvent = curry((type, node) => {
   const event = new Event(type)
 
   node.dispatchEvent(event)
+
+  return node
 })
 
 export {

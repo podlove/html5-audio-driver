@@ -64,7 +64,6 @@ const props = collectProperties({
   ended,
   rate,
   muted,
-  channels,
   src,
   paused,
   playing,
@@ -79,10 +78,10 @@ export {
   ended,
   rate,
   muted,
-  channels,
   state,
   playing,
   paused,
   props,
-  src
+  src,
+  channels
 }

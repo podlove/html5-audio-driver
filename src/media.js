@@ -2,7 +2,6 @@ import { compose, map } from 'ramda'
 
 import { appendNode, setAttributes, createNode } from './utils'
 import { mediaPolyfill } from './polyfills'
-import { audioContext } from './media-context'
 
 const setNodeAttributes = compose(setAttributes, createNode)
 
@@ -16,6 +15,6 @@ const createSource = ({
 
 const createSourceNodes = node => compose(appendNode(node), map(createSource))
 
-const mediaNode = compose(audioContext, mediaPolyfill, createNode)
+const mediaNode = compose(mediaPolyfill, createNode)
 
 export { createSourceNodes, mediaNode }

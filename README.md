@@ -110,7 +110,6 @@ playEvent(console.log) // similar to onPlay(myAudioElement, console.log)
 *  muted,
 *  src,
 *  paused,
-*  channels,
 *  playing
 * }
 */
@@ -185,7 +184,6 @@ props(myAudioElement)
 *  rate,
 *  muted,
 *  src,
-*  channels,
 *  paused,
 *  playing
 * }

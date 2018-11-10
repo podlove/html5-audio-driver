@@ -12,7 +12,6 @@ const setMediaDefaults = node => {
   node.loop = false
   node.preload = 'none'
   node.controls = false
-  node.crossOrigin = 'anonymous'
 
   return node
 }

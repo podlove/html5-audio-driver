@@ -73,11 +73,12 @@ const setPlaytime = media => (time = 0) => {
   time = time > mediaDuration ? mediaDuration : time
   time = time < 0 ? 0 : time
 
-  // Safe play for IE11+
-  try {
+  if (media.initialized) {
     media.playtime = time
-    media.custom.currentTime = time
-  } catch (e) {}
+    media.currentTime = time
+  } else {
+    media.playtime = time
+  }
 
   return media
 }

@@ -50,7 +50,7 @@ const state = compose(state => {
 
 // TODO: make functional
 const playing = media =>
-  media.custom.currentTime > 0 &&
+  media.currentTime > 0 &&
   !media.paused &&
   !media.ended &&
   media.readyState > 2

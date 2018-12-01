@@ -12,7 +12,8 @@ const setMediaDefaults = node => {
   node.loop = false
   node.preload = 'none'
   node.controls = false
-  node.custom = { currentTime: 0 }
+  node.playtime = 0
+  node.initialized = false
 
   return node
 }
@@ -23,16 +24,26 @@ const setMediaDefaults = node => {
  * Adds ability for Safari to set the playtime without the need of loading the full file
  */
 const updatePlaytimeToCurrentTime = media => {
-  media.playtime = media.custom.currentTime
+  media.playtime = media.currentTime
   return media
 }
 
 const updateCurrentTimeToPlaytime = media => {
+  if (!media.initialized) {
+    return media
+  }
+
   try {
-    media.custom.currentTime = media.playtime
+    media.currentTime = media.playtime
   } catch (e) {}
 
   return media
+}
+
+const readyToPlay = node => {
+  node.initialized = true
+
+  return node
 }
 
 // HTML Audio implementation 101 quirks: on Safari and iOS you just can set currentTime after loading
@@ -42,7 +53,7 @@ const polyfillPlaytime = node => {
   node.addEventListener('timeupdate', compose(updatePlaytimeToCurrentTime, getNodeFromEvent))
 
   node.addEventListener('canplay',
-    compose(updateCurrentTimeToPlaytime, getNodeFromEvent), { once: true })
+    compose(updateCurrentTimeToPlaytime, readyToPlay, getNodeFromEvent), { once: true })
   node.addEventListener('play',
     compose(updateCurrentTimeToPlaytime, getNodeFromEvent))
 

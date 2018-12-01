@@ -56,7 +56,7 @@ describe('actions', () => {
         playtimeSetter(50)
         playAction()
         expect(audioElement.playtime).to.be.at.least(50)
-        expect(audioElement.custom.currentTime).to.be.at.least(50)
+        expect(audioElement.currentTime).to.be.at.least(50)
       }, duration))
     })
   })

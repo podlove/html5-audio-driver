@@ -41,7 +41,7 @@ export const attatchStream = media => {
 
   // Finally start loading
   hls.on(Hls.Events.MANIFEST_PARSED, () => {
-    hls.startLoad(media.currentTime)
+    hls.startLoad(media.custom.currentTime)
   })
 
   // Translate errors to native media errors

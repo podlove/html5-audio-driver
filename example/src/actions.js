@@ -12,6 +12,8 @@ const unmuteButton = document.getElementById('unmute')
 export const registerActions = node => {
   const mediaActions = actions(node)
 
+  window.actions = mediaActions
+
   loadButton.addEventListener('click', mediaActions.load)
   playButton.addEventListener('click', mediaActions.play)
   pauseButton.addEventListener('click', mediaActions.pause)

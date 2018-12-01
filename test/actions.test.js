@@ -4,6 +4,7 @@ import { audio } from '@podlove/html5-audio-driver'
 import { onPlay } from '@podlove/html5-audio-driver/events'
 import { actions, setPlaytime, play, pause, load, mute, unmute, setVolume, setRate } from '@podlove/html5-audio-driver/actions'
 import { duration, playing, muted, volume, rate } from '@podlove/html5-audio-driver/props'
+import { onError } from '@podlove/html5-audio-driver/events'
 import { audioFixture } from 'test/fixtures'
 import { testLoader, onDesktopIt } from 'test/helpers'
 
@@ -12,6 +13,7 @@ describe('actions', () => {
 
   beforeEach(() => {
     audioElement = audio(audioFixture)
+    onError(audioElement, console.log)
   })
 
   afterEach(() => {
@@ -54,7 +56,7 @@ describe('actions', () => {
         playtimeSetter(50)
         playAction()
         expect(audioElement.playtime).to.be.at.least(50)
-        expect(audioElement.currentTime).to.be.at.least(50)
+        expect(audioElement.custom.currentTime).to.be.at.least(50)
       }, duration))
     })
   })

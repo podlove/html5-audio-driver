@@ -56,19 +56,26 @@ const onError = curry((media, callback) => {
 
       switch (networkState || this.networkState) {
         case HTMLMediaElement.NETWORK_NO_SOURCE:
-          return callback('NETWORK_NO_SOURCE')
+          return callback('NETWORK_NO_SOURCE', {})
 
         case HTMLMediaElement.NETWORK_EMPTY:
-          return callback('NETWORK_EMPTY')
+          return callback('NETWORK_EMPTY', {})
 
         case HTMLMediaElement.NETWORK_IDLE:
           return callback('NETWORK_IDLE')
 
         case HTMLMediaElement.NETWORK_LOADING:
-          return callback('NETWORK_LOADING')
+          return callback('NETWORK_LOADING', {})
       }
     },
     true
+  )
+
+  media.addEventListener(
+    'error-media',
+    function ({ detail }) {
+      callback('MEDIA_ERROR', detail)
+    }, false
   )
 
   return media

@@ -151,7 +151,7 @@ audioEvents.onEnd(console.log)
 | `onBuffering`       | When browser waits for audio segments to play         | `waiting`         | All props                                                               | `false` |
 | `onPlaytimeUpdate`  | When currentTime of audio changes                     | `timeupdate`      | playtime                                                                | `false` |
 | `onVolumeChange`    | When volume of audio changes                          | `volumechange`    | volume                                                                  | `false` |
-| `onError`           | When an error occurred while playing the audio        | `error`           | `NETWORK_NO_SOURCE`, `NETWORK_EMPTY`, `NETWORK_IDLE`, `NETWORK_LOADING`, `MEDIA_ERROR` | `false` |
+| `onError`           | When an error occurred while playing the audio        | `error`           | `NETWORK_NO_SOURCE`, `NETWORK_EMPTY`, `NETWORK_LOADING`, `MEDIA_ERROR` | `false` |
 | `onDurationChange`  | When browser has new information on audio duration    | `durationchange`  | duration                                                                | `false` |
 | `onRateChange`      | When browser detects a change in audio playback rate  | `ratechange`      | rate                                                                    | `false` |
 | `onFilterUpdate`    | When a filter has been changed                        | `filterUpdated`   | All props                                                               | `false` |

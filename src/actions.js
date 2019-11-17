@@ -13,6 +13,8 @@ const load = media => () => {
 
 // play :: MediaElement -> () -> MediaElement
 const play = media => () => {
+  media.play()
+
   // Some browsers doesn't implement it as a promise
   try {
     media

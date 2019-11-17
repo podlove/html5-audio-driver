@@ -71,6 +71,15 @@ const onError = curry((media, callback) => {
   media.addEventListener(
     'error-media',
     function ({ detail }) {
+      const stoppedByUserCodes = [
+        0, // safari
+        20, // chrome & firefox
+      ]
+
+      if (stoppedByUserCodes.includes(detail.code)) {
+        return
+      }
+
       callback('MEDIA_ERROR', detail)
     }, false
   )

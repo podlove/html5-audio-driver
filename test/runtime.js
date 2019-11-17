@@ -1,3 +1,5 @@
+import './polyfills'
+
 // Test Framework
 import 'mocha/mocha'
 import sinon from 'sinon/lib/sinon'

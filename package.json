@@ -9,8 +9,8 @@
     "clean": "rm -rf dist/ && mkdir -p dist/",
     "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build && cp -R src dist",
     "build": "webpack -p --progress --config build/webpack.config.build.js",
-    "test": "node test && NODE_ENV=test webpack --progress --config ./test/webpack.config.js && http-server tmp",
-    "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./test/webpack.config.js"
+    "test": "node test && NODE_ENV=test webpack --progress --config ./build/webpack.config.test.js && http-server tmp",
+    "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./build/webpack.config.test.js"
   },
   "repository": {
     "type": "git",
@@ -22,28 +22,26 @@
   },
   "main": "index.js",
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "6.26.0",
+    "@babel/core": "7.7.2",
+    "@babel/plugin-transform-runtime": "7.6.2",
+    "@babel/preset-env": "7.7.1",
+    "@babel/runtime": "7.7.2",
+    "babel-loader": "8.0.6",
     "chai": "4.1.1",
     "css-loader": "^3.2.0",
     "detect-mobile-browser": "5.0.0",
     "file-loader": "^1.1.11",
     "fs-extra": "4.0.1",
     "glob": "7.1.2",
-    "handlebars": "4.1.2",
+    "handlebars": "^4.5.2",
     "http-server": "0.10.0",
     "mocha": "^6.2.0",
+    "regenerator-runtime": "0.13.3",
     "sinon": "3.2.1",
     "sinon-chai": "2.13.0",
     "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.1.4"
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10",
+    "core-js": "3.4.1"
   }
 }

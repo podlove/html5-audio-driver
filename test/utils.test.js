@@ -1,5 +1,4 @@
 /* global describe it expect sinon beforeEach afterEach */
-import 'babel-polyfill'
 import { audio } from '@podlove/html5-audio-driver'
 import { audioFixture } from 'test/fixtures'
 import { testLoader } from 'test/helpers'

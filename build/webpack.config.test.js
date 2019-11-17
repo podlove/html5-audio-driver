@@ -6,8 +6,8 @@ const scripts = glob.sync('./test/**/*.test.js').reduce((result, file) =>
   Object.assign({}, result, {
     [path.parse(file).name]: file
   }), {
-    runtime: './test/runtime.js'
-  })
+  runtime: './test/runtime.js'
+})
 
 module.exports = {
   mode: 'development',
@@ -27,6 +27,13 @@ module.exports = {
     rules: [{
       test: /\.css$/,
       use: ['style-loader', 'css-loader']
+    },
+    {
+      test: /\.(js)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader'
+      }
     }]
   },
   devServer: {

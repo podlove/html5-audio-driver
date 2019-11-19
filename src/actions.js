@@ -13,17 +13,20 @@ const load = media => () => {
 
 // play :: MediaElement -> () -> MediaElement
 const play = media => () => {
-  media.play()
-
-  // Some browsers doesn't implement it as a promise
+  // safe play, fixes inconsistency in media API
   try {
-    media
-      .play()
-      // safe play, fixes inconsistency in media API
-      .catch(e => {
+    // Some browsers doesn't implement it as a promise
+    const playAction = media.play()
+
+    // some does ~.~
+    if (playAction && typeof playAction.catch !== 'undefined') {
+      playAction.catch(e => {
         media.dispatchEvent(new CustomEvent('error-media', { detail: e }))
       })
+    }
+
   } catch (e) {
+    console.log(e)
     media.dispatchEvent(new CustomEvent('error-media', { detail: e }))
   }
 

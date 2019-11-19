@@ -210,7 +210,7 @@ props(myAudioElement)
 
 ## Handled HTML5 Quirks and Limitations (the nasty part :/)
 
-HTML5 audio was a needed addition to get rid of the flash hell. Although it is already multiple years implemented in all the different browsers each implementation has it's flaws. If you dive deeper into the topic I recommend you the [following article](https://24ways.org/2010/the-state-of-html5-audio).
+HTML5 audio was a needed addition to get rid of the flash hell. Although it is already multiple years implemented in all the different browsers each implementation has it's flaws. If you want to dive deeper into the topic I recommend you the [following article](https://24ways.org/2010/the-state-of-html5-audio).
 
 ### Play Action
 
@@ -224,9 +224,13 @@ In Safari and mobile Safari it isn't possible to set the `currentTime` before lo
 
 To `play` audio on mobile devices you have to trigger use a direct user interaction to trigger the audio. Also `volume` is not available on mobile devices.
 
+## Legacy Browser Support (IE11)
+
+In case you need IE11 support you have to provide some polyfills in your application. Have a look at the [test polyfills](test/polyfills.js) to see a working example.
+
 ## Publishing
 
-Run `yarn publish:prepare` move to the `dist/` folder and run `npm publish --public`
+Run `npm publish:prepare` move to the `dist/` folder and run `npm publish --public`
 
 
 ## License

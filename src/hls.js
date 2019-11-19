@@ -46,7 +46,7 @@ export const attatchStream = media => {
 
   // Translate errors to native media errors
   hls.on(Hls.Events.ERROR, function (event, data) {
-    switch (data.details) {
+     switch (data.details) {
       case Hls.ErrorDetails.NETWORK_ERROR:
         hls.startLoad()
         media.dispatchEvent(new CustomEvent('error', { detail: { networkState: HTMLMediaElement.NETWORK_EMPTY } }))

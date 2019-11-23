@@ -1,5 +1,5 @@
 # Pure HTML5 Audio Driver
-[![npm version](https://badge.fury.io/js/html5-audio-driver.svg)](https://badge.fury.io/js/html5-audio-driver)
+[![npm version](https://badge.fury.io/js/%40podlove%2Fhtml5-audio-driver.svg)](https://badge.fury.io/js/%40podlove%2Fhtml5-audio-driver.svg)
 [![Standard Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/feross/standard)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpodlove%2Fhtml5-audio-driver?ref=badge_shield)
@@ -29,7 +29,7 @@ Opinionated low level functional bindings to control html5 audio
 If you have already an audio element defined, good for you, skip this and use the dom reference. Otherwise you can use this helper, the helper will create an audio element without controls, preloading and loops:
 
 ```javascript
-import { audio } from 'html5-audio-driver'
+import { audio } from '@podlove/html5-audio-driver'
 
 const myAudioElement = audio([{
   url: 'audio-files/example.m4a',
@@ -51,7 +51,7 @@ All audio element actions are curried and accept as their first parameter the au
 
 ```javascript
 import { compose } from 'ramda'
-import { play, setPlaytime } from 'html5-audio-driver/actions'
+import { play, setPlaytime } from '@podlove/html5-audio-driver/actions'
 
 const setPlaytimeAndPlay = compose(play, setAudioPlaytime)(myAudioElement)
 // Sets the playtime to 50 seconds and plays the audio
@@ -61,7 +61,7 @@ setPlaytimeAndPlay(50)
 For convenience also a `action` composer is available:
 
 ```javascript
-import { actions } from 'html5-audio-driver'
+import { actions } from '@podlove/html5-audio-driver'
 
 const audioActions = actions(myAudioElement)
 
@@ -92,7 +92,7 @@ audioActions.unmute()
 All audio events are curried and accept as their first parameter the audio element. The second parameter is always the callback function. Each event returns a different set of audio properties, depending on the event scope:
 
 ```javascript
-import { onPlay } from 'html5-audio-driver/events'
+import { onPlay } from '@podlove/html5-audio-driver/events'
 
 const playEvent = onPlay(myAudioElement)
 
@@ -118,7 +118,7 @@ playEvent(console.log) // similar to onPlay(myAudioElement, console.log)
 For convenience also a `events` composer is available:
 
 ```javascript
-import { events } from 'html5-audio-driver'
+import { events } from '@podlove/html5-audio-driver'
 
 const audioEvents = events(myAudioElement)
 
@@ -162,7 +162,7 @@ Multiple different functions are provided to give you easy access to audio eleme
 
 ```javascript
 
-import { volume } from 'html5-audio-driver/props'
+import { volume } from '@podlove/html5-audio-driver/props'
 
 isPlaying(myAudioElement) // Will return false
 ```
@@ -170,7 +170,7 @@ isPlaying(myAudioElement) // Will return false
 For convenience also a composed version is available giving you all available properties:
 
 ```javascript
-import { props } from 'html5-audio-driver/props'
+import { props } from '@podlove/html5-audio-driver/props'
 
 props(myAudioElement)
 /**

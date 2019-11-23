@@ -13,7 +13,8 @@ import {
   volume,
   duration,
   rate,
-  buffered
+  buffered,
+  state
 } from './props'
 
 // events
@@ -28,6 +29,7 @@ const eventFactory = (event, processor = props, factoryOptions = {}) =>
     return media
   })
 
+
 const onLoading = eventFactory('progress', props, {
   once: true
 })
@@ -36,7 +38,27 @@ const onLoaded = eventFactory('canplaythrough', props, {
   once: true
 })
 
-const onReady = eventFactory('canplay', props)
+const onReady = curry((media, callback, runtimeOptions = {}) => {
+  const readyEvent = media.addEventListener(
+    'timeupdate',
+    event => {
+      const node = getNodeFromEvent(event)
+
+      if (state(node) !== 'HAVE_ENOUGH_DATA') {
+        return
+      }
+
+      media.removeEventListener('timeupdate', readyEvent)
+      callback(props(node))
+    },
+    Object.assign({}, runtimeOptions)
+  )
+
+  return media
+})
+
+eventFactory('timeupdate', props)
+
 
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')

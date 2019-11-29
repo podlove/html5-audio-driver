@@ -14,7 +14,8 @@ import {
   duration,
   rate,
   buffered,
-  state
+  state,
+  initialized
 } from './props'
 
 // events
@@ -74,6 +75,11 @@ const onError = curry((media, callback) => {
   media.addEventListener(
     'error',
     function ({ detail }) {
+      // media element refresh
+      if (!initialized(media)) {
+        return
+      }
+
       const networkState = detail && detail.networkState
 
       switch (networkState || this.networkState) {
@@ -97,6 +103,10 @@ const onError = curry((media, callback) => {
         0, // safari
         20, // chrome & firefox
       ]
+
+      if (!initialized(media)) {
+        return
+      }
 
       if (stoppedByUserCodes.includes(detail.code)) {
         return

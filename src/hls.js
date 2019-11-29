@@ -9,7 +9,7 @@ import { toArray, getMediaSources } from './utils'
 const hlsSource = compose((sources) => sources.reduce((result, source) =>
   result || ~['application/x-mpegURL', 'vnd.apple.mpegURL'].indexOf(source.mimeType) ? source.url : null, null), toArray)
 
-export const isHLS = (sources = []) => {
+export const isHLS = sources => {
   if (!Hls.isSupported()) {
     return false
   }

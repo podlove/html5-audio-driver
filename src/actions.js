@@ -1,4 +1,4 @@
-import { duration } from './props'
+import { duration, initialized } from './props'
 import { collectProperties } from './utils'
 
 /**
@@ -78,13 +78,30 @@ const setPlaytime = media => (time = 0) => {
   time = time > mediaDuration ? mediaDuration : time
   time = time < 0 ? 0 : time
 
-  if (media.initialized) {
+  if (initialized(media)) {
     media.playtime = time
     media.currentTime = time
   } else {
     media.playtime = time
   }
 
+  return media
+}
+
+// reset :: MediaElement -> MediaElement
+const reset = media => {
+  if (!initialized(media)) {
+    return media
+  }
+
+  media.setAttribute('src', null)
+  while (media.firstChild) {
+    media.removeChild(media.firstChild)
+  }
+  media.removeAttribute('src')
+  load(media)
+
+  media.initialized = false
   return media
 }
 
@@ -96,7 +113,8 @@ const actions = collectProperties({
   mute,
   unmute,
   setVolume,
-  setRate
+  setRate,
+  reset
 })
 
 export {
@@ -108,5 +126,6 @@ export {
   unmute,
   setVolume,
   setRate,
-  actions
+  actions,
+  reset
 }

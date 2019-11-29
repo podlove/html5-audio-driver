@@ -1,5 +1,6 @@
 import { compose } from 'ramda'
 import { getNodeFromEvent } from './utils'
+import { initialized } from './props'
 
 /**
  * Node Defaults
@@ -29,7 +30,7 @@ const updatePlaytimeToCurrentTime = media => {
 }
 
 const updateCurrentTimeToPlaytime = media => {
-  if (!media.initialized) {
+  if (!initialized(media)) {
     return media
   }
 

@@ -90,7 +90,7 @@ const setPlaytime = media => (time = 0) => {
 
 // reset :: MediaElement -> MediaElement
 const reset = media => {
-  if (!initialized(media)) {
+  if (!media.firstChild) {
     return media
   }
 
@@ -99,9 +99,7 @@ const reset = media => {
     media.removeChild(media.firstChild)
   }
   media.removeAttribute('src')
-  load(media)
 
-  media.initialized = false
   return media
 }
 

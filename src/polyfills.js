@@ -55,6 +55,7 @@ const polyfillPlaytime = node => {
 
   node.addEventListener('canplay',
     compose(updateCurrentTimeToPlaytime, readyToPlay, getNodeFromEvent), { once: true })
+
   node.addEventListener('play',
     compose(updateCurrentTimeToPlaytime, getNodeFromEvent))
 

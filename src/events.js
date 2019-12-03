@@ -49,6 +49,7 @@ const onReady = curry((media, callback, runtimeOptions = {}) => {
         return
       }
 
+      media.initialized = true
       media.removeEventListener('timeupdate', readyEvent)
       callback(props(node))
     },
@@ -76,7 +77,7 @@ const onError = curry((media, callback) => {
     'error',
     function ({ detail }) {
       // media element refresh
-      if (!initialized(media)) {
+      if (!media.firstChild) {
         return
       }
 

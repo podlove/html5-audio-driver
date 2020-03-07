@@ -17,11 +17,12 @@
     "url": "https://github.com/podlove/html5-audio-driver.git"
   },
   "dependencies": {
-    "hls.js": "0.9.1",
+    "hls.js": "0.13.2",
     "ramda": "0.24.1"
   },
   "main": "index.js",
   "devDependencies": {
+    "webpack-dev-server": "3.10.3",
     "@babel/core": "7.7.2",
     "@babel/plugin-transform-runtime": "7.6.2",
     "@babel/plugin-proposal-object-rest-spread": "7.6.2",

@@ -7,7 +7,8 @@ module.exports = {
     audio: './example/audio.js',
     'audio-hls': './example/audio-hls.js',
     video: './example/video.js',
-    'video-hls': './example/video-hls.js'
+    'video-hls': './example/video-hls.js',
+    'audio-connect': './example/audio-connect.js'
   },
   output: {
     filename: './tmp/[name].js'

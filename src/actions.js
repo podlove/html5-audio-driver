@@ -88,21 +88,6 @@ const setPlaytime = media => (time = 0) => {
   return media
 }
 
-// reset :: MediaElement -> MediaElement
-const reset = media => {
-  if (!media.firstChild) {
-    return media
-  }
-
-  media.setAttribute('src', null)
-  while (media.firstChild) {
-    media.removeChild(media.firstChild)
-  }
-  media.removeAttribute('src')
-
-  return media
-}
-
 const actions = collectProperties({
   play,
   pause,
@@ -111,8 +96,7 @@ const actions = collectProperties({
   mute,
   unmute,
   setVolume,
-  setRate,
-  reset
+  setRate
 })
 
 export {
@@ -124,6 +108,5 @@ export {
   unmute,
   setVolume,
   setRate,
-  actions,
-  reset
+  actions
 }

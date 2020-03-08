@@ -1,90 +1,99 @@
-import { compose } from 'ramda'
+import { attatchStream } from "./hls";
+import { audio as createAudioElement } from "./audio";
 
-import { createSourceNodes, mediaNode } from './media'
-import { mountNode } from './utils'
-import { attatchStream } from './hls'
-import { audio as createAudioElement } from './audio'
+import { events as mediaEvents } from "./events";
+import { actions as mediaActions } from "./actions";
+import { props } from "./props"
 
-import { events as mediaEvents } from './events'
-import { actions as mediaActions } from './actions'
+const ACTIONS = [
+  'play',
+  'pause',
+  'load',
+  'setPlaytime',
+  'mute',
+  'unmute',
+  'setVolume',
+  'setRate'
+]
 
-// type -> MediaFacade
+const EVENTS = [
+  'onLoading',
+  'onLoaded',
+  'onPause',
+  'onBufferChange',
+  'onEnd',
+  'onPlaytimeUpdate',
+  'onVolumeChange',
+  'onError',
+  'onDurationChange',
+  'onRateChange',
+  'onPlay',
+  'onBuffering',
+  'onReady',
+  'onFilterUpdate'
+]
+
 export const audio = () => {
-  let mediaElement = null
-
-  const actions = {
-    play: () => {},
-    pause: () => {},
-    load: () => {},
-    setPlaytime: () => {},
-    mute: () => {},
-    unmute: () => {},
-    setVolume: () => {},
-    setRate: () => {},
-    reset: () => {}
-  }
-
-  const recievers = {
-    onLoading: [],
-    onLoaded: [],
-    onPause: [],
-    onBufferChange: [],
-    onEnd: [],
-    onPlaytimeUpdate: [],
-    onVolumeChange: [],
-    onError: [],
-    onDurationChange: [],
-    onRateChange: [],
-    onPlay: [],
-    onBuffering: [],
-    onReady: [],
-    onFilterUpdate: []
-  }
-
-  const registerEvent = eventType => handler => recievers[eventType].push(handler)
-
-  const connect = sources => () => {
-    // create a new media element
-    mediaElement = createAudioElement(sources)
-    attatchStream(mediaElement)
-
-    // connect the events to existing recievers
-    const eventEmitters = mediaEvents(mediaElement)
-    Object.keys(eventEmitters).forEach(name => recievers[name].forEach(receiver => eventEmitters[name](receiver)))
-
-    // update actions to new media element
-    const actionEmitters = mediaActions(mediaElement)
-    Object.keys(actionEmitters).forEach(name => actions[name] = actionEmitters[name])
-
-    // call play
-    actions.play()
-  }
-
-  const load = sources => {
-    // remove media element
-    mediaElement && mediaElement.parentNode.removeChild()
-    actions.play = connect(sources)
-  }
-
-  return {
-    mediaElement,
+  const facade = {
+    state: {},
     load,
-    events: {
-      onLoading: registerEvent('onLoading'),
-      onLoaded: registerEvent('onLoaded'),
-      onPause: registerEvent('onPause'),
-      onBufferChange: registerEvent('onBufferChange'),
-      onEnd: registerEvent('onEnd'),
-      onPlaytimeUpdate: registerEvent('onPlaytimeUpdate'),
-      onVolumeChange: registerEvent('onVolumeChange'),
-      onError: registerEvent('onError'),
-      onDurationChange: registerEvent('onDurationChange'),
-      onRateChange: registerEvent('onRateChange'),
-      onPlay: registerEvent('onPlay'),
-      onBuffering: registerEvent('onBuffering'),
-      onReady: registerEvent('onReady'),
-      onFilterUpdate: registerEvent('onFilterUpdate')
-    },
-    actions
+    mediaElement: null,
+    actions: ACTIONS.reduce(
+      (result, action) => ({
+        ...result,
+        [action]: () => {}
+      }),
+      {}
+    ),
+    events: EVENTS.reduce(
+      (result, event) => ({
+        ...result,
+        [event]: handler => recievers[event].push(handler)
+      }),
+      {}
+    )
+  };
+
+  const recievers = EVENTS.reduce(
+    (result, event) => ({
+      ...result,
+      [event]: [() => facade.state = props(facade.mediaElement)]
+    }),
+    {}
+  );
+
+  function load(sources) {
+    // remove media element
+    facade.mediaElement && facade.mediaElement.parentNode.removeChild(facade.mediaElement);
+    facade.actions.play = connect(sources, 'play');
+    ACTIONS.forEach(action => {
+      facade.actions[action] = connect(sources, action)
+    });
   }
-}
+
+  function connect(sources, action) {
+    return (params = []) => {
+      // create a new media element
+      facade.mediaElement = createAudioElement(sources);
+      attatchStream(facade.mediaElement);
+
+      // connect the events to existing recievers
+      const eventEmitters = mediaEvents(facade.mediaElement);
+
+      EVENTS.forEach(name =>
+        recievers[name].forEach(receiver => eventEmitters[name](receiver))
+      );
+
+      // update actions to new media element
+      const actionEmitters = mediaActions(facade.mediaElement);
+      ACTIONS.forEach(name =>
+        facade.actions[name] = actionEmitters[name]
+      );
+
+      // run the action
+      action && facade.actions[action].call(null, params);
+    };
+  }
+
+  return facade;
+};

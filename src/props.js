@@ -51,6 +51,7 @@ const state = compose(state => {
 
 // TODO: make functional
 const playing = media =>
+  media &&
   media.currentTime > 0 &&
   !media.paused &&
   !media.ended &&

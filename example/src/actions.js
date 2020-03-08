@@ -2,12 +2,12 @@ import { compose } from 'ramda'
 import { actions } from '@podlove/html5-audio-driver'
 
 // actions
-const playButton = document.getElementById('play')
-const pauseButton = document.getElementById('pause')
-const loadButton = document.getElementById('load')
-const restartButton = document.getElementById('restart')
-const muteButton = document.getElementById('mute')
-const unmuteButton = document.getElementById('unmute')
+export const playButton = document.getElementById('play')
+export const pauseButton = document.getElementById('pause')
+export const loadButton = document.getElementById('load')
+export const restartButton = document.getElementById('restart')
+export const muteButton = document.getElementById('mute')
+export const unmuteButton = document.getElementById('unmute')
 
 export const registerActions = node => {
   const mediaActions = actions(node)
@@ -20,13 +20,4 @@ export const registerActions = node => {
   muteButton.addEventListener('click', mediaActions.mute)
   unmuteButton.addEventListener('click', mediaActions.unmute)
   restartButton.addEventListener('click', compose(mediaActions.play, () => mediaActions.setPlaytime(0), mediaActions.pause))
-}
-
-export const registerConnectActions = connector => {
-  loadButton.addEventListener('click', connector.actions.load)
-  playButton.addEventListener('click', connector.actions.play)
-  pauseButton.addEventListener('click', connector.actions.pause)
-  muteButton.addEventListener('click', connector.actions.mute)
-  unmuteButton.addEventListener('click', connector.actions.unmute)
-  restartButton.addEventListener('click', compose(connector.actions.play, () => connector.actions.setPlaytime(0), connector.actions.pause))
 }

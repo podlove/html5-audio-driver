@@ -61,7 +61,6 @@ const onReady = curry((media, callback, runtimeOptions = {}) => {
 
 eventFactory('timeupdate', props)
 
-
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')
 const onEnd = eventFactory('ended')

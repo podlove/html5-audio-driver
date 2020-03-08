@@ -13,7 +13,8 @@ module.exports = {
     utils: file('utils'),
     hls: file('hls'),
     filters: file('filters'),
-    media: file('media')
+    media: file('media'),
+    connect: file('connect')
   },
   output: {
     path: path.resolve('./dist'),

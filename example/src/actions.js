@@ -2,12 +2,12 @@ import { compose } from 'ramda'
 import { actions } from '@podlove/html5-audio-driver'
 
 // actions
-const playButton = document.getElementById('play')
-const pauseButton = document.getElementById('pause')
-const loadButton = document.getElementById('load')
-const restartButton = document.getElementById('restart')
-const muteButton = document.getElementById('mute')
-const unmuteButton = document.getElementById('unmute')
+export const playButton = document.getElementById('play')
+export const pauseButton = document.getElementById('pause')
+export const loadButton = document.getElementById('load')
+export const restartButton = document.getElementById('restart')
+export const muteButton = document.getElementById('mute')
+export const unmuteButton = document.getElementById('unmute')
 
 export const registerActions = node => {
   const mediaActions = actions(node)

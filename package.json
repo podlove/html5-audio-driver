@@ -1,6 +1,6 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "1.3.13",
+  "version": "1.4.0",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
@@ -22,21 +22,21 @@
   },
   "main": "index.js",
   "devDependencies": {
-    "webpack-dev-server": "3.10.3",
     "@babel/core": "7.7.2",
-    "@babel/plugin-transform-runtime": "7.6.2",
     "@babel/plugin-proposal-object-rest-spread": "7.6.2",
+    "@babel/plugin-transform-runtime": "7.6.2",
     "@babel/preset-env": "7.7.1",
     "@babel/runtime": "7.7.2",
     "babel-loader": "8.0.6",
     "chai": "4.1.1",
+    "core-js": "3.4.1",
     "css-loader": "^3.2.0",
     "detect-mobile-browser": "5.0.0",
     "file-loader": "^1.1.11",
     "fs-extra": "4.0.1",
     "glob": "7.1.2",
-    "handlebars": "^4.5.2",
-    "http-server": "0.10.0",
+    "handlebars": "^4.7.3",
+    "http-server": "^0.12.1",
     "mocha": "^6.2.0",
     "regenerator-runtime": "0.13.3",
     "sinon": "3.2.1",
@@ -44,6 +44,6 @@
     "style-loader": "^0.21.0",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10",
-    "core-js": "3.4.1"
+    "webpack-dev-server": "3.10.3"
   }
 }

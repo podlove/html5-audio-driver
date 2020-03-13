@@ -39,19 +39,22 @@ const onLoaded = eventFactory('canplaythrough', props, {
   once: true
 })
 
-const onReady = curry((media, callback, runtimeOptions = {}) => {
-  const readyEvent = media.addEventListener(
-    'timeupdate',
+const onReady = eventFactory('canplaythrough', props)
+const onPlay = eventFactory('play')
+const onPause = eventFactory('pause')
+const onEnd = eventFactory('ended')
+const onFilterUpdate = eventFactory('filterUpdated', props)
+
+const onBufferChange = eventFactory('progress', buffered)
+const onBuffering = curry((media, callback, runtimeOptions = {}) => {
+  media.addEventListener(
+    'waiting',
     event => {
       const node = getNodeFromEvent(event)
 
       if (state(node) !== 'HAVE_ENOUGH_DATA') {
-        return
+        callback(props(node))
       }
-
-      media.initialized = true
-      media.removeEventListener('timeupdate', readyEvent)
-      callback(props(node))
     },
     Object.assign({}, runtimeOptions)
   )
@@ -59,15 +62,6 @@ const onReady = curry((media, callback, runtimeOptions = {}) => {
   return media
 })
 
-eventFactory('timeupdate', props)
-
-const onPlay = eventFactory('play')
-const onPause = eventFactory('pause')
-const onEnd = eventFactory('ended')
-const onFilterUpdate = eventFactory('filterUpdated', props)
-
-const onBufferChange = eventFactory('progress', buffered)
-const onBuffering = eventFactory('waiting')
 const onPlaytimeUpdate = eventFactory('timeupdate', playtime)
 const onVolumeChange = eventFactory('volumechange', volume)
 
@@ -75,11 +69,6 @@ const onError = curry((media, callback) => {
   media.addEventListener(
     'error',
     function ({ detail }) {
-      // media element refresh
-      if (!media.firstChild) {
-        return
-      }
-
       const networkState = detail && detail.networkState
 
       switch (networkState || this.networkState) {

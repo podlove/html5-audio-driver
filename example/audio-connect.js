@@ -4,7 +4,7 @@ import m4a from 'file-loader!./audio-files/example.m4a'
 import mp3 from 'file-loader!./audio-files/example.mp3'
 import ogg from 'file-loader!./audio-files/example.ogg'
 
-import { connect } from '@podlove/html5-audio-driver'
+import { connect, props } from '@podlove/html5-audio-driver'
 import { loadButton, playButton, pauseButton, muteButton, unmuteButton, restartButton } from './src/actions'
 import { volumeInput, rateInput } from './src/inputs'
 import { log } from './src/console'
@@ -13,7 +13,7 @@ import { log } from './src/console'
 const connector = connect.audio()
 
 const load = () => connector.load([{
-  url: m4a,
+url: m4a,
   mimeType: 'audio/mp4'
 }, {
   url: mp3,
@@ -38,7 +38,7 @@ rateInput.addEventListener('change', compose(connector.actions.setRate, path(['t
 // Props
 const renderProps = () => {
   const element = document.getElementById('props')
-  const playerProperties = connector.state
+  const playerProperties = props(connector.mediaElement)
 
   while (element.firstChild) {
     element.removeChild(element.firstChild)

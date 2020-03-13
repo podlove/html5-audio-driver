@@ -1,9 +1,9 @@
+import { forEach } from 'ramda';
 import { attatchStream } from "./hls";
 import { audio as createAudioElement } from "./audio";
 
 import { events as mediaEvents } from "./events";
 import { actions as mediaActions } from "./actions";
-import { props } from "./props"
 
 const ACTIONS = [
   'play',
@@ -35,7 +35,6 @@ const EVENTS = [
 
 export const audio = () => {
   const facade = {
-    state: {},
     load,
     mediaElement: null,
     actions: ACTIONS.reduce(
@@ -48,7 +47,7 @@ export const audio = () => {
     events: EVENTS.reduce(
       (result, event) => ({
         ...result,
-        [event]: handler => recievers[event].push(handler)
+        [event]: handler => recievers[event].push(() => console.log(event)) && recievers[event].push(handler)
       }),
       {}
     )
@@ -57,7 +56,7 @@ export const audio = () => {
   const recievers = EVENTS.reduce(
     (result, event) => ({
       ...result,
-      [event]: [() => facade.state = props(facade.mediaElement)]
+      [event]: []
     }),
     {}
   );
@@ -65,7 +64,7 @@ export const audio = () => {
   function load(sources) {
     // remove media element
     facade.mediaElement && facade.mediaElement.parentNode.removeChild(facade.mediaElement);
-    facade.actions.play = connect(sources, 'play');
+
     ACTIONS.forEach(action => {
       facade.actions[action] = connect(sources, action)
     });
@@ -74,6 +73,7 @@ export const audio = () => {
   function connect(sources, action) {
     return (params = []) => {
       // create a new media element
+
       facade.mediaElement = createAudioElement(sources);
       attatchStream(facade.mediaElement);
 
@@ -86,6 +86,7 @@ export const audio = () => {
 
       // update actions to new media element
       const actionEmitters = mediaActions(facade.mediaElement);
+
       ACTIONS.forEach(name =>
         facade.actions[name] = actionEmitters[name]
       );

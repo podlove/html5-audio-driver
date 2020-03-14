@@ -47,7 +47,7 @@ export const audio = () => {
     events: EVENTS.reduce(
       (result, event) => ({
         ...result,
-        [event]: handler => recievers[event].push(() => console.log(event)) && recievers[event].push(handler)
+        [event]: handler => recievers[event].push(handler)
       }),
       {}
     )

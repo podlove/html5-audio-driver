@@ -1,4 +1,3 @@
-import { forEach } from 'ramda';
 import { attatchStream } from "./hls";
 import { audio as createAudioElement } from "./audio";
 
@@ -56,7 +55,7 @@ export const audio = () => {
   const recievers = EVENTS.reduce(
     (result, event) => ({
       ...result,
-      [event]: []
+      [event]: [() => console.log(event)]
     }),
     {}
   );
@@ -73,8 +72,11 @@ export const audio = () => {
   function connect(sources, action) {
     return (params = []) => {
       // create a new media element
-
       facade.mediaElement = createAudioElement(sources);
+
+      // Fix for Safari, otherwise it won't load the audio files
+      facade.mediaElement.preload="metadata";
+
       attatchStream(facade.mediaElement);
 
       // connect the events to existing recievers
@@ -91,11 +93,8 @@ export const audio = () => {
         facade.actions[name] = actionEmitters[name]
       );
 
-      // Fix for Safari, push the action to the end of the stack to ensure that the audio context is loaded
-      setTimeout(() => {
-        // run the action
-        action && facade.actions[action].call(null, params);
-      })
+      // call initial action
+      action && facade.actions[action].call(null, params)
     };
   }
 

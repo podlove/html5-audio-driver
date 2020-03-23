@@ -39,6 +39,8 @@ const onLoaded = eventFactory('canplaythrough', props, {
   once: true
 })
 
+const canPlay = eventFactory('canplaythrough', props, { once: true })
+
 const onReady = eventFactory('canplaythrough', props)
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')
@@ -125,7 +127,8 @@ const events = collectProperties({
   onPlay,
   onBuffering,
   onReady,
-  onFilterUpdate
+  onFilterUpdate,
+  canPlay
 })
 
 export {
@@ -143,5 +146,6 @@ export {
   events,
   onBuffering,
   onReady,
-  onFilterUpdate
+  onFilterUpdate,
+  canPlay
 }

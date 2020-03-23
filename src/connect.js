@@ -91,8 +91,11 @@ export const audio = () => {
         facade.actions[name] = actionEmitters[name]
       );
 
-      // run the action
-      action && facade.actions[action].call(null, params);
+      // Fix for Safari, push the action to the end of the stack to ensure that the audio context is loaded
+      setTimeout(() => {
+        // run the action
+        action && facade.actions[action].call(null, params);
+      })
     };
   }
 

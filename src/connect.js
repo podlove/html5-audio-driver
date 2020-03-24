@@ -55,7 +55,7 @@ export const audio = () => {
   const recievers = EVENTS.reduce(
     (result, event) => ({
       ...result,
-      [event]: [() => console.log(event)]
+      [event]: []
     }),
     {}
   );

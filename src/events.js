@@ -79,9 +79,6 @@ const onError = curry((media, callback) => {
 
         case HTMLMediaElement.NETWORK_EMPTY:
           return callback('NETWORK_EMPTY', {})
-
-        case HTMLMediaElement.NETWORK_LOADING:
-          return callback('NETWORK_LOADING', {})
       }
     },
     true

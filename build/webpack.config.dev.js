@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -33,5 +34,13 @@ module.exports = {
         loader: 'babel-loader'
       }
     }]
-  }
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        path.resolve(__dirname, '..', 'node_modules', 'milligram', 'dist', 'milligram.min.css'),
+        path.resolve(__dirname, '..', 'node_modules', 'normalize.css', 'normalize.css')
+      ]
+    })
+  ]
 }

@@ -6,7 +6,7 @@ import ogg from 'file-loader!./audio-files/example.ogg'
 
 import { connect, props } from '@podlove/html5-audio-driver'
 import { loadButton, playButton, pauseButton, muteButton, unmuteButton, restartButton } from './src/actions'
-import { volumeInput, rateInput } from './src/inputs'
+import { volumeInput, rateInput, progressBar } from './src/inputs'
 import { log } from './src/console'
 
 
@@ -32,8 +32,9 @@ unmuteButton.addEventListener('click', () => connector.actions.unmute())
 restartButton.addEventListener('click', compose(() => connector.actions.play(), () => connector.actions.setPlaytime(0), () => connector.actions.pause()))
 
 // inputs
-volumeInput.addEventListener('change', compose(connector.actions.setVolume, path(['target', 'value'])))
-rateInput.addEventListener('change', compose(connector.actions.setRate, path(['target', 'value'])))
+volumeInput.addEventListener('change', compose(val => connector.actions.setVolume(val), path(['target', 'value'])))
+rateInput.addEventListener('change', compose(val => connector.actions.setRate(val), path(['target', 'value'])))
+progressBar.addEventListener('change', compose(val => connector.actions.setPlaytime(val * 250), path(['target', 'value'])))
 
 // Props
 const renderProps = () => {
@@ -66,4 +67,7 @@ connector.events.onRateChange(onEvent('rate changed'))
 connector.events.onDurationChange(onEvent('duration changed'))
 connector.events.onVolumeChange(onEvent('volume changed'))
 connector.events.onFilterUpdate(onEvent('filter updated'))
+connector.events.onPlaytimeUpdate(value => {
+  progressBar.value = value / 250
+})
 

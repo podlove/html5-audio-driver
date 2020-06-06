@@ -1,8 +1,10 @@
 import { attatchStream } from "./hls";
 import { audio as createAudioElement } from "./audio";
+import { browser } from "./utils";
 
 import { events as mediaEvents } from "./events";
 import { actions as mediaActions } from "./actions";
+import { fromPairs } from "ramda";
 
 const ACTIONS = [
   'play',
@@ -75,7 +77,10 @@ export const audio = () => {
       facade.mediaElement = createAudioElement(sources);
 
       // Fix for Safari, otherwise it won't load the audio files
-      facade.mediaElement.preload="metadata";
+      console.log(browser)
+      if (browser === "safari") {
+        facade.mediaElement.preload = "metadata";
+      }
 
       attatchStream(facade.mediaElement);
 

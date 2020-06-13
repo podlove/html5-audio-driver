@@ -26,7 +26,7 @@ const play = media => () => {
     }
 
   } catch (e) {
-    console.log(e)
+    console.warn(e)
     media.dispatchEvent(new CustomEvent('error-media', { detail: e }))
   }
 

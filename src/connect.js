@@ -77,7 +77,6 @@ export const audio = () => {
       facade.mediaElement = createAudioElement(sources);
 
       // Fix for Safari, otherwise it won't load the audio files
-      console.log(browser)
       if (browser === "safari") {
         facade.mediaElement.preload = "metadata";
       }

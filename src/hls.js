@@ -7,7 +7,7 @@ import { toArray, getMediaSources } from './utils'
 
 // See: https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/StreamingMediaGuide/DeployingHTTPLiveStreaming/DeployingHTTPLiveStreaming.html
 const hlsSource = compose((sources) => sources.reduce((result, source) =>
-  result || ~['application/x-mpegURL', 'vnd.apple.mpegURL'].indexOf(source.mimeType) ? source.url : null, null), toArray)
+  result || ~['application/x-mpegurl', 'vnd.apple.mpegurl'].indexOf(source.mimeType.toLowerCase()) ? source.url : null, null), toArray)
 
 export const isHLS = sources => {
   if (!Hls.isSupported()) {

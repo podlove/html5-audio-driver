@@ -51,6 +51,10 @@ export const attatchStream = media => {
         hls.startLoad()
         media.dispatchEvent(new CustomEvent('error', { detail: { networkState: HTMLMediaElement.NETWORK_EMPTY } }))
         break
+     case Hls.ErrorTypes.MEDIA_ERROR:
+        console.log("fatal media error encountered, try to recover");
+        hls.recoverMediaError();
+        break;         
       default:
         hls.destroy()
         media.dispatchEvent(new CustomEvent('error', { detail: { networkState: HTMLMediaElement.NETWORK_NO_SOURCE } }))

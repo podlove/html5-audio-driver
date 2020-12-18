@@ -11,7 +11,7 @@ import { initialized } from './props'
 const setMediaDefaults = node => {
   node.autoplay = false
   node.loop = false
-  node.preload = 'none'
+  node.preload = 'auto' // if set to 'none' this won't trigger canplay events in IE11 or won't play in Safari
   node.controls = false
   node.playtime = 0
   node.initialized = false

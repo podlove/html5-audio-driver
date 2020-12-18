@@ -10,6 +10,7 @@ export const registerEvents = node => {
   const mediaEvents = events(node)
   renderProps(node)
 
+  mediaEvents.onLoaded(onEvent('ready'))
   mediaEvents.onLoaded(onEvent('loaded'))
   mediaEvents.onLoading(onEvent('loading'))
   mediaEvents.onBuffering(onEvent('buffering'))

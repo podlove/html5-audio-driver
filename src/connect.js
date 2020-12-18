@@ -76,11 +76,6 @@ export const audio = () => {
       // create a new media element
       facade.mediaElement = createAudioElement(sources);
 
-      // Fix for Safari, otherwise it won't load the audio files
-      if (browser === "safari") {
-        facade.mediaElement.preload = "metadata";
-      }
-
       attatchStream(facade.mediaElement);
 
       // connect the events to existing recievers

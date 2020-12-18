@@ -10,7 +10,8 @@
     "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build && cp -R src dist",
     "build": "webpack -p --progress --config build/webpack.config.build.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./build/webpack.config.test.js && http-server tmp",
-    "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./build/webpack.config.test.js"
+    "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./build/webpack.config.test.js",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,23 @@
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "^3.11.0",
     "copy-webpack-plugin": "6.0.2",
-    "normalize.css": "8.0.1"
+    "normalize.css": "8.0.1",
+    "release-it": "14.2.1"
+  },
+  "release-it": {
+    "hooks": {
+      "after:bump": [
+        "npm run publish:prepare"
+      ]
+    },
+    "npm": {
+      "publishPath": "./dist"
+    },
+    "git": {
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
+    }
   }
 }

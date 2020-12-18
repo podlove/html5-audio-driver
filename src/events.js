@@ -19,13 +19,15 @@ import {
 } from './props'
 
 // events
-const eventFactory = (event, processor = props, factoryOptions = {}) =>
+const eventFactory = (events, processor = props, factoryOptions = {}) =>
   curry((media, callback, runtimeOptions = {}) => {
-    media.addEventListener(
-      event,
-      compose(callback, processor, getNodeFromEvent),
-      Object.assign({}, factoryOptions, runtimeOptions)
-    )
+    [].concat(events).forEach(event => {
+      media.addEventListener(
+        event,
+        compose(callback, processor, getNodeFromEvent),
+        Object.assign({}, factoryOptions, runtimeOptions)
+      )
+    })
 
     return media
   })
@@ -35,13 +37,13 @@ const onLoading = eventFactory('progress', props, {
   once: true
 })
 
-const onLoaded = eventFactory('canplaythrough', props, {
+const onLoaded = eventFactory(['canplay', 'canplaythrough'], props, {
   once: true
 })
 
-const canPlay = eventFactory('canplaythrough', props, { once: true })
+const canPlay = eventFactory(['canplay', 'canplaythrough'], props, { once: true })
 
-const onReady = eventFactory('canplaythrough', props)
+const onReady = eventFactory(['canplay', 'canplaythrough'], props)
 const onPlay = eventFactory('play')
 const onPause = eventFactory('pause')
 const onEnd = eventFactory('ended')

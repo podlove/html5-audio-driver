@@ -1,10 +1,7 @@
 import { attatchStream } from "./hls";
 import { audio as createAudioElement } from "./audio";
-import { browser } from "./utils";
-
 import { events as mediaEvents } from "./events";
 import { actions as mediaActions } from "./actions";
-import { fromPairs } from "ramda";
 
 const ACTIONS = [
   'play',
@@ -24,6 +21,7 @@ const EVENTS = [
   'onBufferChange',
   'onEnd',
   'onPlaytimeUpdate',
+  'onLiveSyncUpdate',
   'onVolumeChange',
   'onError',
   'onDurationChange',

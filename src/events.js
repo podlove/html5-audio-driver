@@ -15,7 +15,8 @@ import {
   rate,
   buffered,
   state,
-  initialized
+  initialized,
+  liveSync
 } from './props'
 
 // events
@@ -68,6 +69,7 @@ const onBuffering = curry((media, callback, runtimeOptions = {}) => {
 
 const onPlaytimeUpdate = eventFactory('timeupdate', playtime)
 const onVolumeChange = eventFactory('volumechange', volume)
+const onLiveSyncUpdate = eventFactory('livesyncupdate', liveSync)
 
 const onError = curry((media, callback) => {
   media.addEventListener(
@@ -127,7 +129,8 @@ const events = collectProperties({
   onBuffering,
   onReady,
   onFilterUpdate,
-  canPlay
+  canPlay,
+  onLiveSyncUpdate
 })
 
 export {
@@ -146,5 +149,6 @@ export {
   onBuffering,
   onReady,
   onFilterUpdate,
-  canPlay
+  canPlay,
+  onLiveSyncUpdate
 }

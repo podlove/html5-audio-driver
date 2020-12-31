@@ -28,6 +28,8 @@ const src = path(['currentSrc'])
 const channels = path(['activeBuffer', 'channelCount'])
 const buffer = path(['audioBuffer'])
 const initialized = path(['initialized'])
+const hls = path(['hls'])
+const liveSync = path(['liveSync'])
 
 const state = compose(state => {
   switch (state) {
@@ -69,7 +71,9 @@ const props = collectProperties({
   src,
   paused,
   playing,
-  buffer
+  buffer,
+  hls,
+  liveSync
 })
 
 export {
@@ -86,5 +90,7 @@ export {
   props,
   src,
   channels,
-  initialized
+  initialized,
+  hls,
+  liveSync
 }

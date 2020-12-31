@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
-    "clean": "rm -rf dist/ && mkdir -p dist/",
+    "clean": "rm -rf dist/* && mkdir -p dist/",
     "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build && cp -R src dist",
     "build": "webpack -p --progress --config build/webpack.config.build.js",
     "test": "node test && NODE_ENV=test webpack --progress --config ./build/webpack.config.test.js && http-server tmp",
@@ -18,7 +18,7 @@
     "url": "https://github.com/podlove/html5-audio-driver.git"
   },
   "dependencies": {
-    "hls.js": "0.13.2",
+    "hls.js": "1.0.0-beta.3",
     "ramda": "0.24.1"
   },
   "main": "index.js",

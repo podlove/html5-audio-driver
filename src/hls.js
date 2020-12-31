@@ -1,66 +1,84 @@
 /* global HTMLMediaElement */
-import Hls from 'hls.js/dist/hls.light'
-import { compose } from 'ramda'
+import Hls from "hls.js/dist/hls.light";
+import { compose } from "ramda";
 
-import { events } from './events'
-import { toArray, getMediaSources } from './utils'
+import { toArray, getMediaSources } from "./utils";
 
 // See: https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/StreamingMediaGuide/DeployingHTTPLiveStreaming/DeployingHTTPLiveStreaming.html
-const hlsSource = compose((sources) => sources.reduce((result, source) =>
-  result || ~['application/x-mpegurl', 'vnd.apple.mpegurl'].indexOf(source.mimeType.toLowerCase()) ? source.url : null, null), toArray)
+const hlsSource = compose(
+  (sources) =>
+    sources.reduce(
+      (result, source) =>
+        result ||
+        ~["application/x-mpegurl", "vnd.apple.mpegurl"].indexOf(
+          source.mimeType.toLowerCase()
+        )
+          ? source.url
+          : null,
+      null
+    ),
+  toArray
+);
 
-export const isHLS = sources => {
+export const isHLS = (sources) => {
   if (!Hls.isSupported()) {
-    return false
+    return false;
   }
 
-  return !!hlsSource(sources)
-}
+  return !!hlsSource(sources);
+};
 
-export const attatchStream = media => {
+export const attatchStream = (media) => {
   if (!Hls.isSupported()) {
-    return media
+    return media;
   }
 
-  const hls = new Hls({ autoStartLoad: false })
-  const sources = getMediaSources(media)
+  const hls = new Hls({
+    liveDurationInfinity: true
+  });
 
-  const hlsStream = hlsSource(sources)
-  const mediaEvents = events(media)
+  const sources = getMediaSources(media);
+
+  const hlsStream = hlsSource(sources);
 
   if (!hlsStream) {
-    return media
+    return media;
   }
 
-  hls.attachMedia(media)
+  media.hls = hls;
 
-  // Load the stream on play
-  mediaEvents.onPlay(() => {
-    hls.loadSource(hlsStream)
-  }, { once: true })
+  hls.attachMedia(media);
+  hls.loadSource(hlsStream);
 
   // Finally start loading
-  hls.on(Hls.Events.MANIFEST_PARSED, () => {
-    hls.startLoad(media.currentTime)
-  })
+  hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+    hls.startLoad(-1);
+  });
 
   // Translate errors to native media errors
   hls.on(Hls.Events.ERROR, function (event, data) {
-     switch (data.details) {
+    switch (data.tyoe) {
       case Hls.ErrorDetails.NETWORK_ERROR:
-        hls.startLoad()
-        media.dispatchEvent(new CustomEvent('error', { detail: { networkState: HTMLMediaElement.NETWORK_EMPTY } }))
-        break
-     case Hls.ErrorTypes.MEDIA_ERROR:
-        hls.recoverMediaError();
-        break;         
+        hls.startLoad();
+        media.dispatchEvent(
+          new CustomEvent("error", {
+            detail: { networkState: HTMLMediaElement.NETWORK_EMPTY },
+          })
+        );
+        break;
+      case Hls.ErrorTypes.OTHER_ERROR:
+        hls.destroy();
+        media.dispatchEvent(
+          new CustomEvent("error", {
+            detail: { networkState: HTMLMediaElement.NETWORK_NO_SOURCE },
+          })
+        );
+        break;
       default:
-        hls.destroy()
-        media.dispatchEvent(new CustomEvent('error', { detail: { networkState: HTMLMediaElement.NETWORK_NO_SOURCE } }))
-        break
+        hls.recoverMediaError();
+        break;
     }
-  })
+  });
 
-  return media
-}
-
+  return media;
+};

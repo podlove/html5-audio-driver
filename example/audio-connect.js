@@ -13,14 +13,9 @@ import { log } from './src/console'
 const connector = connect.audio()
 
 const load = () => connector.load([{
-url: m4a,
-  mimeType: 'audio/mp4'
-}, {
-  url: mp3,
-  mimeType: 'audio/mp3'
-}, {
-  url: ogg,
-  mimeType: 'audio/pgg'
+  url: 'https://mcdn.br.de/br/hf/b5/master.m3u8',
+  title: 'HLS Stream',
+  mimeType: 'application/x-mpegURL'
 }])
 
 // actions

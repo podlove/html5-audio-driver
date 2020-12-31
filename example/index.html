@@ -61,11 +61,16 @@
                   <label for="volume">Volume</label>
                   <input type="number" id="volume" placeholder="Volume" min="0" max="1" value="1" step="0.1">
                   <label for="rate">Rate</label>
-                  <input type="number" id="rate" placeholder="Volume" value="1" min="0" max="4" step="0.1">
+                  <input type="number" id="rate" placeholder="Rate" value="1" min="0" max="4" step="0.1">
                 </fieldset>
 
                 <h3>Progress</h3>
                 <input id="progress" style="width: 100%" type="range" value="0" min="0" max="1" step="0.01" />
+
+                <div>
+                  <button id="backward">-30</button>
+                  <button id="forward">+30</button>
+                </div>
 
                 <h3>Audio Filters</h3>
                 <button id="mono">mono</button>
@@ -98,6 +103,14 @@
           'audio-connect': {
             title: 'Audio Connect',
             src: 'audio-connect.js'
+          },
+          'live-hls': {
+            title: 'Audio Driver HLS Live',
+            src: 'live-hls.js'
+          },
+          'live': {
+            title: 'Audio Driver Live',
+            src: 'live.js'
           }
         }
 

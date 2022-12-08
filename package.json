@@ -5,12 +5,10 @@
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
+    "start": "vite serve",
     "clean": "rm -rf dist/* && mkdir -p dist/",
-    "publish:prepare": "npm run clean && cp LICENSE package.json dist/ && npm run build && cp -R src dist",
-    "build": "webpack -p --progress --config build/webpack.config.build.js",
-    "test": "node test && NODE_ENV=test webpack --progress --config ./build/webpack.config.test.js && http-server tmp",
-    "test:dev": "node test && NODE_ENV=development webpack-dev-server --progress --config ./build/webpack.config.test.js",
+    "build": "vite build",
+    "test": "cypress open --browser chrome",
     "release": "release-it"
   },
   "repository": {
@@ -18,38 +16,18 @@
     "url": "https://github.com/podlove/html5-audio-driver.git"
   },
   "dependencies": {
-    "hls.js": "1.0.0-beta.3",
+    "hls.js": "1.2.8",
     "ramda": "0.24.1"
   },
   "main": "index.js",
   "devDependencies": {
-    "@babel/core": "7.7.2",
-    "@babel/plugin-proposal-object-rest-spread": "7.6.2",
-    "@babel/plugin-transform-runtime": "7.6.2",
-    "@babel/preset-env": "7.7.1",
-    "@babel/runtime": "7.7.2",
-    "babel-loader": "8.0.6",
-    "chai": "4.1.1",
-    "core-js": "3.4.1",
-    "css-loader": "^3.2.0",
-    "detect-mobile-browser": "5.0.0",
-    "file-loader": "^1.1.11",
-    "fs-extra": "4.0.1",
-    "glob": "7.1.2",
-    "handlebars": "^4.7.6",
-    "http-server": "^0.12.3",
+    "cypress": "12.0.1",
     "milligram": "1.4.0",
-    "mocha": "^6.2.0",
-    "regenerator-runtime": "0.13.3",
-    "sinon": "3.2.1",
-    "sinon-chai": "2.13.0",
-    "style-loader": "^0.21.0",
-    "webpack": "4.41.2",
-    "webpack-cli": "3.3.10",
-    "webpack-dev-server": "^3.11.0",
-    "copy-webpack-plugin": "6.0.2",
     "normalize.css": "8.0.1",
-    "release-it": "14.2.1"
+    "release-it": "15.5.1",
+    "typescript": "^4.9.3",
+    "vite": "3.2.5",
+    "vitest": "0.25.5"
   },
   "release-it": {
     "hooks": {

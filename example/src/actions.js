@@ -1,5 +1,5 @@
 import { compose } from 'ramda'
-import { actions, props } from '@podlove/html5-audio-driver'
+import { actions, props } from '../../src'
 
 // actions
 export const playButton = document.getElementById('play')

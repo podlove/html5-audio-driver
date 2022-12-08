@@ -1,4 +1,4 @@
-import { mono, stereo } from '@podlove/html5-audio-driver/filters'
+import { mono, stereo } from '../../src/filters'
 
 // actions
 const monoButton = document.getElementById('mono')

@@ -1,5 +1,5 @@
 import { compose, path } from 'ramda'
-import { actions } from '@podlove/html5-audio-driver'
+import { actions } from '../../SRC'
 
 export const volumeInput = document.getElementById('volume')
 export const rateInput = document.getElementById('rate')

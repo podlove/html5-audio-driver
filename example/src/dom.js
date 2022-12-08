@@ -1,4 +1,4 @@
-import { props } from '@podlove/html5-audio-driver'
+import { props } from '../../src'
 
 // Props display
 export const renderProps = (audio) => input => {

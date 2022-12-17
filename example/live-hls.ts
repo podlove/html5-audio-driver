@@ -7,8 +7,9 @@ import { registerInputs } from "./src/inputs";
 
 const sources = [
   {
-    url: "https://ndr-ndr2-niedersachsen.cast.addradio.de/ndr/ndr2/niedersachsen/mp3/128/stream.mp3",
-    mimeType: "audio/mp3",
+    src: "https://mcdn.br.de/br/hf/b5/master.m3u8",
+    title: "HLS Stream",
+    type: "application/x-mpegURL",
   },
 ];
 

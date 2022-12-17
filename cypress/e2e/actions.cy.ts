@@ -1,15 +1,26 @@
 import { compose } from "ramda";
 import { audio } from "../../src";
-import { onPlay } from '../../src/events'
-import { actions, setPlaytime, play, pause, load, mute, unmute, setVolume, setRate } from '../../src/actions'
-import { duration, playing, muted, volume, rate } from '../../src/props'
-import { onError } from '../../src/events'
+import { onPlay } from "../../src/events";
+import {
+  actions,
+  setPlaytime,
+  play,
+  pause,
+  load,
+  mute,
+  unmute,
+  setVolume,
+  setRate,
+} from "../../src/actions";
+import { duration, playing, muted, volume, rate } from "../../src/props";
+import { onError } from "../../src/events";
 
 import { audioFixture } from "../support/audio-fixtures";
 import { audioLoader } from "../support/audio-loader";
+import { MediaElement } from "../../src/types";
 
 describe("actions", () => {
-  let audioElement;
+  let audioElement: MediaElement;
 
   beforeEach(() => {
     audioElement = audio(audioFixture());
@@ -21,8 +32,8 @@ describe("actions", () => {
   });
 
   describe("setPlaytime", () => {
-    let playtimeSetter;
-    let playAction;
+    let playtimeSetter: (input: number) => MediaElement;
+    let playAction: () => MediaElement;
 
     beforeEach(() => {
       playtimeSetter = setPlaytime(audioElement);
@@ -52,7 +63,6 @@ describe("actions", () => {
         compose(
           done,
           (duration) => {
-            console.log(duration);
             expect(playtimeSetter(duration + 50).playtime).to.equal(duration);
           },
           duration
@@ -77,253 +87,256 @@ describe("actions", () => {
     });
   });
 
-  describe('play', () => {
-    let playAction
-    let playEvent
+  describe("play", () => {
+    let playAction: any;
+    let playEvent: any;
 
     beforeEach(() => {
-      playAction = play(audioElement)
-      playEvent = onPlay(audioElement)
-    })
+      playAction = play(audioElement);
+      playEvent = onPlay(audioElement);
+    });
 
-    it('should be a function', () => {
-      expect(typeof play).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof play).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof playAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof playAction).to.equal("function");
+    });
 
     // This test will fail on mobile devices because a direct user interaction is required
-    it('should play the audio', done => {
-      playEvent(() => {
-        done()
-      }, { once: true })
-      playAction()
-    })
-  })
+    it("should play the audio", (done) => {
+      playEvent(
+        () => {
+          done();
+        },
+        { once: true }
+      );
+      playAction();
+    });
+  });
 
-  describe('pause', () => {
-    let pauseAction
-    let playAction
+  describe("pause", () => {
+    let pauseAction: any;
+    let playAction: any;
 
     beforeEach(() => {
-      pauseAction = pause(audioElement)
-      playAction = play(audioElement)
-    })
+      pauseAction = pause(audioElement);
+      playAction = play(audioElement);
+    });
 
-    it('should be a function', () => {
-      expect(typeof pause).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof pause).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof pauseAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof pauseAction).to.equal("function");
+    });
 
-    it('should pause the audio', done => {
+    it("should pause the audio", (done) => {
       audioLoader(audioElement, () => {
-        playAction()
+        playAction();
         setTimeout(() => {
-          pauseAction()
-          expect(playing(audioElement)).to.equal(false)
-          done()
-        }, 1000)
-      })
-    })
-  })
+          pauseAction();
+          expect(playing(audioElement)).to.equal(false);
+          done();
+        }, 1000);
+      });
+    });
+  });
 
-  describe('load', () => {
-    let loadAction
-
-    beforeEach(() => {
-      loadAction = load(audioElement)
-    })
-
-    it('should be a function', () => {
-      expect(typeof load).to.equal('function')
-    })
-
-    it('should return a function', () => {
-      expect(typeof loadAction).to.equal('function')
-    })
-
-    it('should load the audio', done => {
-      audioElement.addEventListener('canplay', () => done(), { once: true })
-      loadAction()
-    })
-  })
-
-  describe('mute', () => {
-    let muteAction
+  describe("load", () => {
+    let loadAction: any;
 
     beforeEach(() => {
-      muteAction = mute(audioElement)
-    })
+      loadAction = load(audioElement);
+    });
 
-    it('should be a function', () => {
-      expect(typeof mute).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof load).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof muteAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof loadAction).to.equal("function");
+    });
 
-    it('mute the audio', done => {
+    it("should load the audio", (done) => {
+      audioElement.addEventListener("canplay", () => done(), { once: true });
+      loadAction();
+    });
+  });
+
+  describe("mute", () => {
+    let muteAction: any;
+
+    beforeEach(() => {
+      muteAction = mute(audioElement);
+    });
+
+    it("should be a function", () => {
+      expect(typeof mute).to.equal("function");
+    });
+
+    it("should return a function", () => {
+      expect(typeof muteAction).to.equal("function");
+    });
+
+    it("mute the audio", (done) => {
       audioLoader(audioElement, () => {
-        expect(muted(audioElement)).to.equal(false)
-        muteAction()
-        expect(muted(audioElement)).to.equal(true)
-        done()
-      })
-    })
-  })
+        expect(muted(audioElement)).to.equal(false);
+        muteAction();
+        expect(muted(audioElement)).to.equal(true);
+        done();
+      });
+    });
+  });
 
-  describe('unmute', () => {
-    let muteAction
-    let unmuteAction
+  describe("unmute", () => {
+    let muteAction: any;
+    let unmuteAction: any;
 
     beforeEach(() => {
-      muteAction = mute(audioElement)
-      unmuteAction = unmute(audioElement)
-    })
+      muteAction = mute(audioElement);
+      unmuteAction = unmute(audioElement);
+    });
 
-    it('should be a function', () => {
-      expect(typeof mute).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof mute).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof unmuteAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof unmuteAction).to.equal("function");
+    });
 
-    it('unmute the audio', done => {
+    it("unmute the audio", (done) => {
       audioLoader(audioElement, () => {
-        muteAction()
-        expect(muted(audioElement)).to.equal(true)
-        unmuteAction()
-        expect(muted(audioElement)).to.equal(false)
-        done()
-      })
-    })
-  })
+        muteAction();
+        expect(muted(audioElement)).to.equal(true);
+        unmuteAction();
+        expect(muted(audioElement)).to.equal(false);
+        done();
+      });
+    });
+  });
 
   // Important: setting volume on mobile is not supported!
-  describe('setVolume', () => {
-    let setVolumeAction
+  describe("setVolume", () => {
+    let setVolumeAction: any;
 
     beforeEach(() => {
-      setVolumeAction = setVolume(audioElement)
-      setVolumeAction(1)
-    })
+      setVolumeAction = setVolume(audioElement);
+      setVolumeAction(1);
+    });
 
-    it('should be a function', () => {
-      expect(typeof setVolume).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof setVolume).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof setVolumeAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof setVolumeAction).to.equal("function");
+    });
 
-    it('sets the audio volume', done => {
+    it("sets the audio volume", (done) => {
       audioLoader(audioElement, () => {
-        expect(volume(audioElement)).to.equal(1)
-        setVolumeAction(0.5)
-        expect(volume(audioElement)).to.equal(0.5)
-        done()
-      })
-    })
+        expect(volume(audioElement)).to.equal(1);
+        setVolumeAction(0.5);
+        expect(volume(audioElement)).to.equal(0.5);
+        done();
+      });
+    });
 
-    it('should prevent volume less than 0', done => {
+    it("should prevent volume less than 0", (done) => {
       audioLoader(audioElement, () => {
-        expect(volume(audioElement)).to.equal(1)
-        setVolumeAction(-1)
-        expect(volume(audioElement)).to.equal(0)
-        done()
-      })
-    })
+        expect(volume(audioElement)).to.equal(1);
+        setVolumeAction(-1);
+        expect(volume(audioElement)).to.equal(0);
+        done();
+      });
+    });
 
-    it('should prevent volume larger than 1', done => {
+    it("should prevent volume larger than 1", (done) => {
       audioLoader(audioElement, () => {
-        expect(volume(audioElement)).to.equal(1)
-        setVolumeAction(2)
-        expect(volume(audioElement)).to.equal(1)
-        done()
-      })
-    })
-  })
+        expect(volume(audioElement)).to.equal(1);
+        setVolumeAction(2);
+        expect(volume(audioElement)).to.equal(1);
+        done();
+      });
+    });
+  });
 
-  describe('setRate', () => {
-    let setRateAction
+  describe("setRate", () => {
+    let setRateAction: any;
 
     beforeEach(() => {
-      setRateAction = setRate(audioElement)
-    })
+      setRateAction = setRate(audioElement);
+    });
 
-    it('should be a function', () => {
-      expect(typeof setRate).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof setRate).to.equal("function");
+    });
 
-    it('should return a function', () => {
-      expect(typeof setRateAction).to.equal('function')
-    })
+    it("should return a function", () => {
+      expect(typeof setRateAction).to.equal("function");
+    });
 
-    it('sets the audio rate', done => {
+    it("sets the audio rate", (done) => {
       audioLoader(audioElement, () => {
-        expect(rate(audioElement)).to.equal(1)
-        setRateAction(0.5)
-        expect(rate(audioElement)).to.equal(0.5)
-        done()
-      })
-    })
+        expect(rate(audioElement)).to.equal(1);
+        setRateAction(0.5);
+        expect(rate(audioElement)).to.equal(0.5);
+        done();
+      });
+    });
 
-    it('should prevent rate less than 0.5', done => {
+    it("should prevent rate less than 0.5", (done) => {
       audioLoader(audioElement, () => {
-        expect(rate(audioElement)).to.equal(1)
-        setRateAction(-1)
-        expect(rate(audioElement)).to.equal(0.5)
-        done()
-      })
-    })
+        expect(rate(audioElement)).to.equal(1);
+        setRateAction(-1);
+        expect(rate(audioElement)).to.equal(0.5);
+        done();
+      });
+    });
 
-    it('should prevent rate larger than 4', done => {
+    it("should prevent rate larger than 4", (done) => {
       audioLoader(audioElement, () => {
-        expect(rate(audioElement)).to.equal(1)
-        setRateAction(5)
-        expect(rate(audioElement)).to.equal(4)
-        done()
-      })
-    })
-  })
+        expect(rate(audioElement)).to.equal(1);
+        setRateAction(5);
+        expect(rate(audioElement)).to.equal(4);
+        done();
+      });
+    });
+  });
 
-  describe('actions', () => {
-    let audioActions
-    let availableActions
+  describe("actions", () => {
+    let audioActions: any;
+    let availableActions: any;
 
     beforeEach(() => {
-      audioActions = actions(audioElement)
-      availableActions = Object.keys(audioActions)
-    })
+      audioActions = actions(audioElement);
+      availableActions = Object.keys(audioActions);
+    });
 
-    it('should be a function', () => {
-      expect(typeof actions).to.equal('function')
-    })
+    it("should be a function", () => {
+      expect(typeof actions).to.equal("function");
+    });
 
-    it('should return a object with actions', () => {
+    it("should return a object with actions", () => {
       expect(availableActions).to.deep.equal([
-        'play',
-        'pause',
-        'load',
-        'setPlaytime',
-        'mute',
-        'unmute',
-        'setVolume',
-        'setRate'
-      ])
-    })
+        "play",
+        "pause",
+        "load",
+        "setPlaytime",
+        "mute",
+        "unmute",
+        "setVolume",
+        "setRate",
+      ]);
+    });
 
-    it('should export an object with functions', () => {
-      availableActions.map(action => {
-        expect(typeof audioActions[action]).to.equal('function')
-      })
-    })
-  })
+    it("should export an object with functions", () => {
+      availableActions.map((action: any) => {
+        expect(typeof audioActions[action]).to.equal("function");
+      });
+    });
+  });
 });

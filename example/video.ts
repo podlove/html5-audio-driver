@@ -6,11 +6,11 @@ import { registerInputs } from "./src/inputs";
 
 export default () => {
   const myVideo = video({
-    url: "http://docs.evostream.com/sample_content/assets/hls-bunny-166/playlist.m3u8",
-    mimeType: "application/x-mpegURL",
+    src: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4",
+    type: "video/mp4",
   });
 
-  document.getElementById("media-node").appendChild(myVideo);
+  document.getElementById("media-node")?.appendChild(myVideo);
 
   registerEvents(myVideo);
   registerActions(myVideo);

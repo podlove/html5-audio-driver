@@ -9,7 +9,10 @@
     "clean": "rm -rf dist/* && mkdir -p dist/",
     "build": "vite build",
     "test": "cypress open --browser chrome",
-    "release": "release-it"
+    "test:cy": "cypress run --browser chrome",
+    "release": "release-it",
+    "prepare": "husky install",
+    "format": "prettier -w {src,cypress}/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -17,7 +20,7 @@
   },
   "dependencies": {
     "hls.js": "1.2.8",
-    "ramda": "0.24.1"
+    "ramda": "0.28.0"
   },
   "main": "index.js",
   "devDependencies": {
@@ -25,14 +28,22 @@
     "milligram": "1.4.0",
     "normalize.css": "8.0.1",
     "release-it": "15.5.1",
-    "typescript": "^4.9.3",
+    "typescript": "4.9.3",
     "vite": "3.2.5",
-    "vitest": "0.25.5"
+    "vitest": "0.25.5",
+    "prettier": "2.8.1",
+    "pretty-quick": "3.1.3",
+    "husky": "8.0.0",
+    "@types/ramda": "0.28.20",
+    "@types/hls.js": "1.0.0"
   },
   "release-it": {
     "hooks": {
+      "before:init": [
+        "npm test"
+      ],
       "after:bump": [
-        "npm run publish:prepare"
+        "npm run build"
       ]
     },
     "npm": {

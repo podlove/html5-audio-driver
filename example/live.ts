@@ -7,9 +7,8 @@ import { registerInputs } from "./src/inputs";
 
 const sources = [
   {
-    url: "https://mcdn.br.de/br/hf/b5/master.m3u8",
-    title: "HLS Stream",
-    mimeType: "application/x-mpegURL",
+    src: "https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3?aggregator=web",
+    type: "audio/mp3",
   },
 ];
 
@@ -19,4 +18,4 @@ export default () => {
   registerEvents(myAudio);
   registerActions(myAudio);
   registerInputs(myAudio);
-}
+};

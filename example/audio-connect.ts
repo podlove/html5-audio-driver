@@ -1,4 +1,4 @@
-import { compose, path } from "ramda";
+import { compose, defaultTo, path, prop } from "ramda";
 
 import { connect, props } from "../src";
 import {
@@ -18,26 +18,26 @@ export default () => {
   const load = () =>
     connector.load([
       {
-        url: "/audio-files/example.m4a",
-        mimeType: "audio/mp4",
+        src: "/audio-files/example.m4a",
+        type: "audio/mp4",
       },
       {
-        url: "./audio-files/example.mp3",
-        mimeType: "audio/mp3",
+        src: "./audio-files/example.mp3",
+        type: "audio/mp3",
       },
       {
-        url: "./audio-files/example.ogg",
-        mimeType: "audio/pgg",
+        src: "./audio-files/example.ogg",
+        type: "audio/pgg",
       },
     ]);
 
   // actions
-  loadButton.addEventListener("click", () => load());
-  playButton.addEventListener("click", () => connector.actions.play());
-  pauseButton.addEventListener("click", () => connector.actions.pause());
-  muteButton.addEventListener("click", () => connector.actions.mute());
-  unmuteButton.addEventListener("click", () => connector.actions.unmute());
-  restartButton.addEventListener(
+  loadButton?.addEventListener("click", () => load());
+  playButton?.addEventListener("click", () => connector.actions.play());
+  pauseButton?.addEventListener("click", () => connector.actions.pause());
+  muteButton?.addEventListener("click", () => connector.actions.mute());
+  unmuteButton?.addEventListener("click", () => connector.actions.unmute());
+  restartButton?.addEventListener(
     "click",
     compose(
       () => connector.actions.play(),
@@ -47,21 +47,22 @@ export default () => {
   );
 
   // inputs
-  volumeInput.addEventListener(
+  volumeInput?.addEventListener(
     "change",
     compose(
       (val) => connector.actions.setVolume(val),
       path(["target", "value"])
     )
   );
-  rateInput.addEventListener(
+  rateInput?.addEventListener(
     "change",
     compose((val) => connector.actions.setRate(val), path(["target", "value"]))
   );
   progressBar.addEventListener(
     "change",
     compose(
-      (val) => connector.actions.setPlaytime(val * 250),
+      (val: any) => connector.actions.setPlaytime(val * 250),
+      defaultTo(0),
       path(["target", "value"])
     )
   );
@@ -71,19 +72,22 @@ export default () => {
     const element = document.getElementById("props");
     const playerProperties = props(connector.mediaElement);
 
-    while (element.firstChild) {
+    while (element?.firstChild) {
       element.removeChild(element.firstChild);
     }
 
-    Object.keys(playerProperties).map((key) => {
+    Object.keys(playerProperties).map((key: any) => {
       const propNode = document.createElement("tr");
-      propNode.innerHTML = `<td>${key}</td><td>${playerProperties[key]}</td>`;
-      element.appendChild(propNode);
+      propNode.innerHTML = `<td>${key}</td><td>${prop(
+        key,
+        playerProperties
+      )}</td>`;
+      element?.appendChild(propNode);
     });
   };
 
   // Events
-  const onEvent = (event) => compose(renderProps, log(event));
+  const onEvent = (event: any) => compose(renderProps, log(event));
   connector.events.onLoaded(onEvent("loaded"));
   connector.events.onLoading(onEvent("loading"));
   connector.events.onBuffering(onEvent("buffering"));
@@ -97,7 +101,9 @@ export default () => {
   connector.events.onDurationChange(onEvent("duration changed"));
   connector.events.onVolumeChange(onEvent("volume changed"));
   connector.events.onFilterUpdate(onEvent("filter updated"));
-  connector.events.onPlaytimeUpdate((value) => {
-    progressBar.value = value / 250;
+  connector.events.onPlaytimeUpdate((value: number | undefined) => {
+    if (typeof value !== "undefined" && progressBar) {
+      progressBar.value = (value / 250).toString();
+    }
   });
 };

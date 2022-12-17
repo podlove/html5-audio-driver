@@ -1,14 +1,14 @@
 export const audioFixture = () => [
   {
-    url: "/audio-files/example.m4a",
-    mimeType: "audio/mp4",
+    src: "/audio-files/example.m4a",
+    type: "audio/mp4",
   },
   {
-    url: "/audio-files/example.mp3",
-    mimeType: "audio/mp3",
+    src: "/audio-files/example.mp3",
+    type: "audio/mp3",
   },
   {
-    url: "/audio-files/example.ogg",
-    mimeType: "audio/ogg",
+    src: "/audio-files/example.ogg",
+    type: "audio/ogg",
   },
 ];

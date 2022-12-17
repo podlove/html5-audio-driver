@@ -1,26 +1,27 @@
 /* global HTMLMediaElement */
-import Hls from "hls.js/dist/hls.light";
+import Hls from "hls.js";
 import { compose } from "ramda";
+import { MediaElement, MediaSource } from "./types";
 
 import { toArray, getMediaSources } from "./utils";
 
 // See: https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/StreamingMediaGuide/DeployingHTTPLiveStreaming/DeployingHTTPLiveStreaming.html
-const hlsSource = compose(
-  (sources) =>
+const hlsSource = compose<[MediaSource[]], MediaSource[], string | null>(
+  (sources: MediaSource[]): string | null =>
     sources.reduce(
-      (result, source) =>
+      (result: string | null, source) =>
         result ||
         ~["application/x-mpegurl", "vnd.apple.mpegurl"].indexOf(
-          source.mimeType.toLowerCase()
+          source.type.toLowerCase()
         )
-          ? source.url
+          ? source.src
           : null,
       null
     ),
-  toArray
+  toArray<MediaSource>
 );
 
-export const isHLS = (sources) => {
+export const isHLS = (sources: MediaSource[]) => {
   if (!Hls.isSupported()) {
     return false;
   }
@@ -28,13 +29,13 @@ export const isHLS = (sources) => {
   return !!hlsSource(sources);
 };
 
-export const attatchStream = (media) => {
+export const attatchStream = (media: MediaElement) => {
   if (!Hls.isSupported()) {
     return media;
   }
 
   const hls = new Hls({
-    liveDurationInfinity: true
+    liveDurationInfinity: true,
   });
 
   const sources = getMediaSources(media);
@@ -56,9 +57,9 @@ export const attatchStream = (media) => {
   });
 
   // Translate errors to native media errors
-  hls.on(Hls.Events.ERROR, function (event, data) {
-    switch (data.tyoe) {
-      case Hls.ErrorDetails.NETWORK_ERROR:
+  hls.on(Hls.Events.ERROR, function (_event, data) {
+    switch (data.type) {
+      case Hls.ErrorTypes.NETWORK_ERROR:
         hls.startLoad();
         media.dispatchEvent(
           new CustomEvent("error", {

@@ -1,6 +1,8 @@
 import { compose, ifElse, identity } from "ramda";
 import { getNodeFromEvent } from "./utils";
 import { initialized, duration, props } from "./props";
+import { MediaElement } from "./types";
+import Hls from "hls.js";
 
 /**
  * Node Defaults
@@ -8,7 +10,7 @@ import { initialized, duration, props } from "./props";
  * Disables media defaults
  */
 
-const setMediaDefaults = (node) => {
+const setMediaDefaults = (node: MediaElement) => {
   node.autoplay = false;
   node.loop = false;
   node.preload = "auto"; // if set to 'none' this won't trigger canplay events in IE11 or won't play in Safari
@@ -26,31 +28,31 @@ const setMediaDefaults = (node) => {
  *
  * Adds ability for Safari to set the playtime without the need of loading the full file
  */
-const updatePlaytimeToCurrentTime = (media) => {
+const updatePlaytimeToCurrentTime = (media: MediaElement) => {
   media.playtime = media.currentTime;
   return media;
 };
 
-const updateCurrentTimeToPlaytime = (media) => {
-  if (!initialized(media)) {
+const updateCurrentTimeToPlaytime = (media: MediaElement) => {
+  if (!media || !initialized(media)) {
     return media;
   }
 
   try {
-    media.currentTime = media.playtime;
+    media.currentTime = media.playtime || 0;
   } catch (e) {}
 
   return media;
 };
 
-const readyToPlay = (node) => {
+const readyToPlay = (node: MediaElement) => {
   node.initialized = true;
 
   return node;
 };
 
 // HTML Audio implementation 101 quirks: on Safari and iOS you just can set currentTime after loading
-const polyfillPlaytime = (node) => {
+const polyfillPlaytime = (node: MediaElement) => {
   node.playtime = 0;
 
   node.addEventListener(
@@ -73,9 +75,9 @@ const polyfillPlaytime = (node) => {
 };
 
 // [livesync] polyfill: adds a pointer to the live position
-const isLivestream = (node) => duration(node) === Infinity;
+const isLivestream = (node: MediaElement) => duration(node) === Infinity;
 
-const liveSyncPosition = ({ playtime, hls }) => {
+const liveSyncPosition = ({ playtime, hls }: { playtime: number | undefined; hls: Hls | undefined}): number => {
   // not a http live stream
   if (!hls) {
     return 0;
@@ -83,13 +85,17 @@ const liveSyncPosition = ({ playtime, hls }) => {
 
   // syncposition wasn't initialized yet
   if (!hls.liveSyncPosition) {
-    return playtime;
+    return playtime || 0;
   }
 
   return hls.liveSyncPosition;
 };
 
-const addLiveSync = (node) => {
+const addLiveSync = (node: MediaElement) => {
+  if (!node) {
+    return node;
+  }
+
   const { playtime, hls } = props(node);
 
   node.liveSync = 0;
@@ -97,17 +103,24 @@ const addLiveSync = (node) => {
   setInterval(() => {
     const sync = liveSyncPosition({ playtime, hls });
 
-    node.liveSync = sync > node.liveSync ? sync : node.liveSync;
+    node.liveSync = sync > (node.liveSync || 0) ? sync : node.liveSync;
 
-    node.liveSync = node.liveSync + 1;
+    node.liveSync = (node.liveSync || 0) + 1;
     node.dispatchEvent(new CustomEvent("livesyncupdate"));
   }, 1000);
 
   return node;
 };
 
-const resetToLivesync = (node) => {
-  const { playtime, liveSync } = props(node);
+const resetToLivesync = (node: MediaElement) => {
+  if (!node) {
+    return node;
+  }
+
+  let { playtime, liveSync } = props(node);
+
+  playtime = playtime || 0;
+  liveSync = liveSync || 0;
 
   if (playtime > liveSync) {
     return node;
@@ -118,7 +131,7 @@ const resetToLivesync = (node) => {
   return node;
 };
 
-const polifyllLiveSync = (node) => {
+const polifyllLiveSync = (node: MediaElement) => {
   node.addEventListener(
     "canplay",
     compose(ifElse(isLivestream, addLiveSync, identity), getNodeFromEvent),

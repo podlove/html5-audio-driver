@@ -17,7 +17,7 @@ const toArray = <T>(input: T | T[]): T[] =>
   Array.isArray(input) ? input : [input];
 
 // Event Utils
-const getNodeFromEvent = prop<HTMLElement>("target");
+const getNodeFromEvent = prop<MediaElement>("target");
 
 // Dom Utils
 const createNode = (tag: string) => document.createElement(tag);

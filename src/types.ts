@@ -2,8 +2,9 @@ import Hls from "hls.js";
 
 export interface MediaElement extends HTMLMediaElement {
   playtime?: number;
-  hls?: Hls;
-  liveSync?: number;
+  hls?: Hls | null;
+  liveSync?: number | null;
+  initialized?: boolean;
 }
 
 export const AudioStateNothing = "HAVE_NOTHING";

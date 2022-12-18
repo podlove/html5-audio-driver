@@ -16,6 +16,6 @@ const createSourceNodes = curry(
   }
 );
 
-const mediaNode = compose(mediaPolyfill, createNode);
+const mediaNode = compose<[string], any, MediaElement>(mediaPolyfill, createNode);
 
 export { createSourceNodes, mediaNode };

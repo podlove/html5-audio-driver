@@ -1,4 +1,3 @@
-/* global describe it expect sinon beforeEach afterEach */
 import { audio } from "../../src";
 import { collectProperties, getNodeFromEvent } from "../../src/utils";
 import { audioFixture } from "../support/audio-fixtures";
@@ -14,7 +13,7 @@ describe("utils", () => {
       expect(typeof collectProperties({ foo: "bar" })).to.equal("function");
     });
 
-    it("should call a list of funciton with a given value", () => {
+    it("should call a list of function with a given value", () => {
       const propertySpyA = cy.spy();
       const propertySpyB = cy.spy();
 

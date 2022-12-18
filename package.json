@@ -87,9 +87,6 @@
         "npm run build"
       ]
     },
-    "npm": {
-      "publishPath": "./dist"
-    },
     "git": {
       "commitMessage": "chore: release v${version}"
     },

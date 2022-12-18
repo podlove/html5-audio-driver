@@ -5,7 +5,6 @@
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/farbraum.umd.js",
   "files": [
     "dist"
   ],
@@ -50,7 +49,7 @@
     "clean": "rm -rf dist/* && mkdir -p dist/",
     "build": "vite build",
     "test": "cypress run --browser chrome",
-    "test:dev": "cypress run --browser chrome",
+    "test:dev": "cypress open --browser chrome",
     "release": "release-it",
     "prepare": "husky install",
     "format": "prettier -w {src,cypress}/**/*.ts"

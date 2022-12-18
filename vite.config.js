@@ -17,9 +17,7 @@ const entries = [
 ];
 
 export default defineConfig({
-  plugins: [
-    dts(),
-  ],
+  plugins: [dts()],
   build: {
     lib: {
       formats: ["es"],
@@ -33,12 +31,12 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        entryFileNames: "[name].js",
+        entryFileNames: "[name].[format].js",
         chunkFileNames: `[name].[hash].js`,
       },
     },
   },
   resolve: {
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
-  }
+  },
 });

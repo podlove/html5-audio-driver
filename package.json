@@ -4,6 +4,47 @@
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
+  "type": "module",
+  "main": "./dist/farbraum.umd.js",
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./actions": {
+      "import": "./dist/actions.js"
+    },
+    "./audio": {
+      "import": "./dist/audio.js"
+    },
+    "./connect": {
+      "import": "./dist/connect.js"
+    },
+    "./events": {
+      "import": "./dist/events.js"
+    },
+    "./filters": {
+      "import": "./dist/filters.js"
+    },
+    "./hls": {
+      "import": "./dist/hls.js"
+    },
+    "./media": {
+      "import": "./dist/media.js"
+    },
+    "./props": {
+      "import": "./dist/props.js"
+    },
+    "./utils": {
+      "import": "./dist/utils.js"
+    },
+    "./video": {
+      "import": "./dist/video.js"
+    }
+  },
   "scripts": {
     "start": "vite serve",
     "clean": "rm -rf dist/* && mkdir -p dist/",
@@ -22,7 +63,6 @@
     "hls.js": "1.2.8",
     "ramda": "0.28.0"
   },
-  "main": "index.js",
   "devDependencies": {
     "cypress": "12.0.1",
     "milligram": "1.4.0",

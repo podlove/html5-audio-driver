@@ -76,7 +76,8 @@
     "husky": "8.0.0",
     "@types/ramda": "0.28.20",
     "@types/hls.js": "1.0.0",
-    "vite-plugin-dts": "1.7.1"
+    "vite-plugin-dts": "1.7.1",
+    "rollup-plugin-delete": "2.0.0"
   },
   "release-it": {
     "hooks": {

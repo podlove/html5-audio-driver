@@ -38,7 +38,7 @@ export default ({ command }) =>
       },
       rollupOptions: {
         output: {
-          entryFileNames: "[name].[format].js",
+          entryFileNames: "[name].js",
           chunkFileNames: `[name].[hash].js`,
         },
       },

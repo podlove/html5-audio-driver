@@ -8,40 +8,53 @@
   "files": [
     "dist"
   ],
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./actions": {
-      "import": "./dist/actions.js"
+      "import": "./dist/actions.js",
+      "types": "./dist/actions.d.ts"
     },
     "./audio": {
-      "import": "./dist/audio.js"
+      "import": "./dist/audio.js",
+      "types": "./dist/audio.d.ts"
     },
     "./connect": {
-      "import": "./dist/connect.js"
+      "import": "./dist/connect.js",
+      "types": "./dist/connect.d.ts"
     },
     "./events": {
-      "import": "./dist/events.js"
+      "import": "./dist/events.js",
+      "types": "./dist/events.d.ts"
     },
     "./filters": {
-      "import": "./dist/filters.js"
+      "import": "./dist/filters.js",
+      "types": "./dist/filters.d.ts"
     },
     "./hls": {
-      "import": "./dist/hls.js"
+      "import": "./dist/hls.js",
+      "types": "./dist/hls.d.ts"
     },
     "./media": {
-      "import": "./dist/media.js"
+      "import": "./dist/media.js",
+      "types": "./dist/media.d.ts"
     },
     "./props": {
-      "import": "./dist/props.js"
+      "import": "./dist/props.js",
+      "types": "./dist/props.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils.js"
+      "import": "./dist/utils.js",
+      "types": "./dist/utils.d.ts"
     },
     "./video": {
-      "import": "./dist/video.js"
+      "import": "./dist/video.js",
+      "types": "./dist/video.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
     }
   },
   "scripts": {

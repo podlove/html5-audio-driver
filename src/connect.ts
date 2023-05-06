@@ -99,3 +99,5 @@ export const audio = () => {
 
   return facade;
 };
+
+export type ConnectInterface = ReturnType<typeof audio>;

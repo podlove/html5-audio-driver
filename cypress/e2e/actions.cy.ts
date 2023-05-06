@@ -49,7 +49,7 @@ describe("actions", () => {
     });
 
     it("should set the playtime", () => {
-      expect(playtimeSetter(10).playtime).to.equal(10);
+      expect(playtimeSetter(9).playtime).to.equal(9);
     });
 
     it("should prevent playtimes less than 0", () => {

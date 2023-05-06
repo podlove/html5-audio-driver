@@ -1,6 +1,6 @@
 {
   "name": "@podlove/html5-audio-driver",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Pure html5 audio driver",
   "author": "Alexander Heimbuch <github@heimbu.ch>",
   "license": "MIT",
